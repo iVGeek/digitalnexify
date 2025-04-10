@@ -107,6 +107,62 @@
             margin: 0 auto 3rem;
         }
         
+        /* Payment Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .close-modal {
+            color: var(--text-muted);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--darker-bg);
+            color: var(--text-color);
+            font-size: 16px;
+        }
+        
         /* Header Styles */
         header {
             background-color: rgba(10, 10, 10, 0.9);
@@ -460,6 +516,15 @@
             margin-right: 10px;
         }
         
+        /* Payment Form Styles */
+        .payment-form {
+            margin-top: 20px;
+        }
+        
+        .payment-form .btn {
+            width: 100%;
+        }
+        
         /* Testimonials Section */
         .testimonials {
             padding: 100px 0;
@@ -783,6 +848,11 @@
             .section-title {
                 font-size: 1.8rem;
             }
+            
+            .modal-content {
+                margin: 10% auto;
+                width: 90%;
+            }
         }
         
         @media (max-width: 576px) {
@@ -832,6 +902,47 @@
             </nav>
         </div>
     </header>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Complete Your Purchase</h2>
+            <form id="customerDetailsForm" class="payment-form">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <input type="hidden" id="selected-plan">
+                <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PesaPal Payment Form (hidden) -->
+    <form id="pesapal-payment-form" method="post" action="https://www.pesapal.com/api/PostPesapalDirectOrderV4" style="display: none;">
+        <input type="hidden" name="Amount" id="pesapal-amount">
+        <input type="hidden" name="Description" id="pesapal-description">
+        <input type="hidden" name="Type" value="MERCHANT">
+        <input type="hidden" name="Reference" id="pesapal-reference">
+        <input type="hidden" name="FirstName" id="pesapal-first-name">
+        <input type="hidden" name="LastName" id="pesapal-last-name">
+        <input type="hidden" name="Email" id="pesapal-email">
+        <input type="hidden" name="PhoneNumber" id="pesapal-phone">
+        <input type="hidden" name="Currency" value="USD">
+    </form>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -930,7 +1041,7 @@
                         <li><i class="fas fa-check"></i> 5 Email Accounts</li>
                         <li><i class="fas fa-check"></i> 24/7 Support</li>
                     </ul>
-                    <a href="#" class="btn btn-outline">Get Started</a>
+                    <button class="btn btn-primary payment-btn" data-plan="starter" data-monthly-price="4.99" data-yearly-price="3.99">Get Started</button>
                 </div>
                 
                 <div class="pricing-card popular">
@@ -948,7 +1059,7 @@
                         <li><i class="fas fa-check"></i> Daily Backups</li>
                         <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <button class="btn btn-primary payment-btn" data-plan="business" data-monthly-price="9.99" data-yearly-price="7.99">Get Started</button>
                 </div>
                 
                 <div class="pricing-card">
@@ -967,7 +1078,7 @@
                         <li><i class="fas fa-check"></i> Dedicated Resources</li>
                         <li><i class="fas fa-check"></i> 24/7 VIP Support</li>
                     </ul>
-                    <a href="#" class="btn btn-outline">Get Started</a>
+                    <button class="btn btn-primary payment-btn" data-plan="enterprise" data-monthly-price="19.99" data-yearly-price="15.99">Get Started</button>
                 </div>
             </div>
         </div>
@@ -1164,6 +1275,9 @@
         </div>
     </footer>
 
+    <!-- PesaPal JS SDK -->
+    <script src="https://www.pesapal.com/api/PostPesapalDirectOrderV4" type="text/javascript"></script>
+
     <script>
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -1238,6 +1352,74 @@
                     });
                 }
             });
+        });
+        
+        // Payment Modal Handling
+        const modal = document.getElementById('paymentModal');
+        const closeModal = document.querySelector('.close-modal');
+        const paymentBtns = document.querySelectorAll('.payment-btn');
+        const customerForm = document.getElementById('customerDetailsForm');
+        const pesapalForm = document.getElementById('pesapal-payment-form');
+        
+        // Open modal when payment button is clicked
+        paymentBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const plan = this.getAttribute('data-plan');
+                const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
+                const price = isYearly ? this.getAttribute('data-yearly-price') : this.getAttribute('data-monthly-price');
+                
+                document.getElementById('selected-plan').value = plan;
+                modal.style.display = 'block';
+            });
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Handle form submission
+        customerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const firstName = document.getElementById('first-name').value;
+            const lastName = document.getElementById('last-name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const plan = document.getElementById('selected-plan').value;
+            
+            // Get pricing info
+            const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
+            const price = isYearly ? 
+                document.querySelector(`.payment-btn[data-plan="${plan}"]`).getAttribute('data-yearly-price') : 
+                document.querySelector(`.payment-btn[data-plan="${plan}"]`).getAttribute('data-monthly-price');
+            const planName = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
+            
+            // Generate unique reference
+            const reference = 'DN-' + plan + '-' + Date.now();
+            
+            // Set PesaPal form values
+            document.getElementById('pesapal-amount').value = price;
+            document.getElementById('pesapal-description').value = 'Digital Nexify ' + planName;
+            document.getElementById('pesapal-reference').value = reference;
+            document.getElementById('pesapal-first-name').value = firstName;
+            document.getElementById('pesapal-last-name').value = lastName;
+            document.getElementById('pesapal-email').value = email;
+            document.getElementById('pesapal-phone').value = phone;
+            
+            // Submit to PesaPal
+            pesapalForm.submit();
+            
+            // Close modal
+            modal.style.display = 'none';
         });
         
         // Add animation when elements come into view
