@@ -18,6 +18,7 @@
             --text-muted: #b0b0b0;
             --success-color: #00e676;
             --error-color: #ff4444;
+            --warning-color: #ffbb33;
         }
         
         * {
@@ -233,6 +234,229 @@
         .payment-status p {
             margin-bottom: 25px;
             font-size: 1.1rem;
+        }
+        
+        /* Account Dashboard */
+        .account-dashboard {
+            padding: 100px 0;
+            background-color: var(--darker-bg);
+            min-height: 100vh;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .dashboard-sidebar {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .dashboard-sidebar h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(0, 168, 255, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .sidebar-menu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .dashboard-content {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 1.8rem;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            margin-right: 20px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: var(--text-muted);
+        }
+        
+        .avatar-upload {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .avatar-upload input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .avatar-upload-label {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary-color);
+            color: #111;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .subscription-card {
+            background-color: var(--darker-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .subscription-card h5 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .subscription-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .subscription-detail {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .subscription-detail label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        
+        .subscription-detail span {
+            font-weight: 500;
+        }
+        
+        /* Welcome Modal */
+        .welcome-modal {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .welcome-modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .welcome-modal p {
+            margin-bottom: 20px;
+        }
+        
+        .welcome-tips {
+            background-color: rgba(0, 168, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .welcome-tips h4 {
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .welcome-tips ul {
+            list-style-position: inside;
+        }
+        
+        .welcome-tips li {
+            margin-bottom: 8px;
+        }
+        
+        /* Verification Modal */
+        .verification-modal {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .verification-modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .verification-modal p {
+            margin-bottom: 20px;
         }
         
         /* Header Styles */
@@ -866,6 +1090,10 @@
             .hero h1 {
                 font-size: 2.8rem;
             }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1014,6 +1242,45 @@
         </div>
     </div>
 
+    <!-- Verification Modal -->
+    <div id="verificationModal" class="modal">
+        <div class="modal-content">
+            <div class="verification-modal">
+                <div class="payment-status-icon">
+                    <i class="fas fa-envelope" style="color: var(--primary-color);"></i>
+                </div>
+                <h3>Verify Your Email</h3>
+                <p>We've sent a verification link to your email address. Please click the link to verify your account.</p>
+                <p>If you didn't receive the email, check your spam folder or <a href="#" id="resendVerification">click here to resend</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome Modal -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <div class="welcome-modal">
+                <div class="payment-status-icon">
+                    <i class="fas fa-check-circle" style="color: var(--success-color);"></i>
+                </div>
+                <h3>Welcome to Digital Nexify!</h3>
+                <p>Thank you for registering. Your account has been successfully verified.</p>
+                
+                <div class="welcome-tips">
+                    <h4>Getting Started Tips:</h4>
+                    <ul>
+                        <li>Explore our hosting plans to find the perfect fit for your needs</li>
+                        <li>Check out our knowledge base for helpful tutorials</li>
+                        <li>Contact our support team if you need any assistance</li>
+                        <li>Complete your profile to get personalized recommendations</li>
+                    </ul>
+                </div>
+                
+                <button class="btn btn-primary" id="startExploring">Start Exploring</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Payment Modal -->
     <div id="paymentModal" class="modal">
         <div class="modal-content">
@@ -1066,6 +1333,142 @@
         </div>
     </div>
 
+    <!-- Account Dashboard -->
+    <div id="accountDashboard" style="display: none;">
+        <section class="account-dashboard">
+            <div class="container">
+                <div class="dashboard-grid">
+                    <div class="dashboard-sidebar">
+                        <h3>My Account</h3>
+                        <ul class="sidebar-menu">
+                            <li><a href="#" class="active" data-section="profile"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a href="#" data-section="subscription"><i class="fas fa-server"></i> Subscription</a></li>
+                            <li><a href="#" data-section="security"><i class="fas fa-shield-alt"></i> Security</a></li>
+                            <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="dashboard-content">
+                        <div class="dashboard-header">
+                            <h2>My Profile</h2>
+                        </div>
+                        
+                        <!-- Profile Section -->
+                        <div id="profileSection" class="dashboard-section">
+                            <div class="profile-header">
+                                <div class="avatar-upload">
+                                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar" class="user-avatar" id="userAvatar">
+                                    <label for="avatarInput" class="avatar-upload-label">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                    <input type="file" id="avatarInput" accept="image/*">
+                                </div>
+                                <div class="profile-info">
+                                    <h3 id="userFullName">John Doe</h3>
+                                    <p id="userEmail">john.doe@example.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h4>Personal Information</h4>
+                                <form id="profileForm">
+                                    <div class="form-group">
+                                        <label for="profile-name">Full Name</label>
+                                        <input type="text" id="profile-name" value="John Doe">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-email">Email Address</label>
+                                        <input type="email" id="profile-email" value="john.doe@example.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-phone">Phone Number</label>
+                                        <input type="tel" id="profile-phone" value="+254712345678">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Subscription Section -->
+                        <div id="subscriptionSection" class="dashboard-section" style="display: none;">
+                            <div class="form-section">
+                                <h4>Current Subscription</h4>
+                                <div class="subscription-card">
+                                    <h5>Business Plan</h5>
+                                    <div class="subscription-details">
+                                        <div class="subscription-detail">
+                                            <label>Status</label>
+                                            <span>Active</span>
+                                        </div>
+                                        <div class="subscription-detail">
+                                            <label>Billing Cycle</label>
+                                            <span>Monthly</span>
+                                        </div>
+                                        <div class="subscription-detail">
+                                            <label>Next Billing Date</label>
+                                            <span>May 15, 2023</span>
+                                        </div>
+                                        <div class="subscription-detail">
+                                            <label>Amount</label>
+                                            <span>$9.99/month</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline">Change Plan</button>
+                                    <button class="btn btn-outline" style="margin-left: 10px;">Cancel Subscription</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h4>Payment Methods</h4>
+                                <p>No payment methods saved.</p>
+                                <button class="btn btn-primary">Add Payment Method</button>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h4>Billing History</h4>
+                                <p>No billing history available.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Security Section -->
+                        <div id="securitySection" class="dashboard-section" style="display: none;">
+                            <div class="form-section">
+                                <h4>Change Password</h4>
+                                <form id="passwordForm">
+                                    <div class="form-group">
+                                        <label for="current-password">Current Password</label>
+                                        <input type="password" id="current-password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new-password">New Password</label>
+                                        <input type="password" id="new-password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm-new-password">Confirm New Password</label>
+                                        <input type="password" id="confirm-new-password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update Password</button>
+                                </form>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h4>Two-Factor Authentication</h4>
+                                <p>Two-factor authentication is currently <strong>disabled</strong>.</p>
+                                <button class="btn btn-outline">Enable 2FA</button>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h4>Account Recovery</h4>
+                                <p>Ensure your recovery email is up to date.</p>
+                                <button class="btn btn-outline">Update Recovery Email</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
     <!-- PesaPal Payment Form (hidden) -->
     <form id="pesapal-payment-form" method="post" action="https://www.pesapal.com/api/PostPesapalDirectOrderV4" style="display: none;">
         <input type="hidden" name="Amount" id="pesapal-amount">
@@ -1079,336 +1482,339 @@
         <input type="hidden" name="Currency" value="USD">
     </form>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-content">
-            <h1>Premium Web Hosting <span>Made Simple</span></h1>
-            <p>Get lightning-fast hosting with 99.9% uptime, free SSL, and 24/7 expert support. Perfect for businesses, developers, and bloggers.</p>
-            <div class="hero-btns">
-                <a href="#pricing" class="btn btn-primary">Get Started</a>
-                <a href="#features" class="btn btn-outline">Learn More</a>
+    <!-- Main Content (shown when not on dashboard) -->
+    <div id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <h1>Premium Web Hosting <span>Made Simple</span></h1>
+                <p>Get lightning-fast hosting with 99.9% uptime, free SSL, and 24/7 expert support. Perfect for businesses, developers, and bloggers.</p>
+                <div class="hero-btns">
+                    <a href="#pricing" class="btn btn-primary">Get Started</a>
+                    <a href="#features" class="btn btn-outline">Learn More</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hosting Dashboard">
+                </div>
             </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hosting Dashboard">
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container features-content">
-            <h2 class="section-title">Why Choose Digital Nexify?</h2>
-            <p class="section-subtitle">We provide everything you need to get your website up and running with maximum performance and security.</p>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Lightning Fast</h3>
-                    <p>Our SSD-powered servers and optimized stack ensure your website loads in milliseconds, improving user experience and SEO.</p>
-                </div>
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="container features-content">
+                <h2 class="section-title">Why Choose Digital Nexify?</h2>
+                <p class="section-subtitle">We provide everything you need to get your website up and running with maximum performance and security.</p>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Lightning Fast</h3>
+                        <p>Our SSD-powered servers and optimized stack ensure your website loads in milliseconds, improving user experience and SEO.</p>
                     </div>
-                    <h3>Rock Solid Security</h3>
-                    <p>Free SSL certificates, DDoS protection, and daily backups keep your website safe from threats and data loss.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Rock Solid Security</h3>
+                        <p>Free SSL certificates, DDoS protection, and daily backups keep your website safe from threats and data loss.</p>
                     </div>
-                    <h3>24/7 Expert Support</h3>
-                    <p>Our hosting experts are available round the clock via live chat, email, and phone to assist you with any issues.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-server"></i>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>24/7 Expert Support</h3>
+                        <p>Our hosting experts are available round the clock via live chat, email, and phone to assist you with any issues.</p>
                     </div>
-                    <h3>99.9% Uptime</h3>
-                    <p>Our redundant infrastructure and network ensure your website stays online when your customers need it most.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h3>99.9% Uptime</h3>
+                        <p>Our redundant infrastructure and network ensure your website stays online when your customers need it most.</p>
                     </div>
-                    <h3>Easy Migration</h3>
-                    <p>We offer free website migration services to move your existing site to our platform with zero downtime.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tachometer-alt"></i>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h3>Easy Migration</h3>
+                        <p>We offer free website migration services to move your existing site to our platform with zero downtime.</p>
                     </div>
-                    <h3>Simple Control Panel</h3>
-                    <p>Our custom control panel makes managing your hosting, domains, and emails intuitive even for beginners.</p>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Simple Control Panel</h3>
+                        <p>Our custom control panel makes managing your hosting, domains, and emails intuitive even for beginners.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container pricing-content">
-            <h2 class="section-title">Simple, Transparent Pricing</h2>
-            <p class="section-subtitle">Choose the perfect plan for your website. All plans come with our 30-day money-back guarantee.</p>
-            
-            <div class="pricing-tabs">
-                <button class="pricing-tab active" data-billing="monthly">Monthly</button>
-                <button class="pricing-tab" data-billing="yearly">Yearly (Save 20%)</button>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Starter</h3>
-                    <div class="price monthly-price">$4.99<span>/mo</span></div>
-                    <div class="price yearly-price" style="display: none;">$3.99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 1 Website</li>
-                        <li><i class="fas fa-check"></i> 10GB SSD Storage</li>
-                        <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
-                        <li><i class="fas fa-check"></i> Free SSL Certificate</li>
-                        <li><i class="fas fa-check"></i> 5 Email Accounts</li>
-                        <li><i class="fas fa-check"></i> 24/7 Support</li>
-                    </ul>
-                    <button class="btn btn-primary payment-btn" data-plan="starter" data-monthly-price="4.99" data-yearly-price="3.99">Get Started</button>
+        <!-- Pricing Section -->
+        <section class="pricing" id="pricing">
+            <div class="container pricing-content">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the perfect plan for your website. All plans come with our 30-day money-back guarantee.</p>
+                
+                <div class="pricing-tabs">
+                    <button class="pricing-tab active" data-billing="monthly">Monthly</button>
+                    <button class="pricing-tab" data-billing="yearly">Yearly (Save 20%)</button>
                 </div>
                 
-                <div class="pricing-card popular">
-                    <div class="popular-badge">Most Popular</div>
-                    <h3>Business</h3>
-                    <div class="price monthly-price">$9.99<span>/mo</span></div>
-                    <div class="price yearly-price" style="display: none;">$7.99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Unlimited Websites</li>
-                        <li><i class="fas fa-check"></i> 50GB SSD Storage</li>
-                        <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
-                        <li><i class="fas fa-check"></i> Free SSL Certificate</li>
-                        <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>
-                        <li><i class="fas fa-check"></i> Free Domain (1st year)</li>
-                        <li><i class="fas fa-check"></i> Daily Backups</li>
-                        <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
-                    </ul>
-                    <button class="btn btn-primary payment-btn" data-plan="business" data-monthly-price="9.99" data-yearly-price="7.99">Get Started</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3>Enterprise</h3>
-                    <div class="price monthly-price">$19.99<span>/mo</span></div>
-                    <div class="price yearly-price" style="display: none;">$15.99<span>/mo</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Unlimited Websites</li>
-                        <li><i class="fas fa-check"></i> 100GB SSD Storage</li>
-                        <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
-                        <li><i class="fas fa-check"></i> Free SSL Certificate</li>
-                        <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>
-                        <li><i class="fas fa-check"></i> Free Domain (1st year)</li>
-                        <li><i class="fas fa-check"></i> Daily Backups</li>
-                        <li><i class="fas fa-check"></i> Free CDN</li>
-                        <li><i class="fas fa-check"></i> Dedicated Resources</li>
-                        <li><i class="fas fa-check"></i> 24/7 VIP Support</li>
-                    </ul>
-                    <button class="btn btn-primary payment-btn" data-plan="enterprise" data-monthly-price="19.99" data-yearly-price="15.99">Get Started</button>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Starter</h3>
+                        <div class="price monthly-price">$4.99<span>/mo</span></div>
+                        <div class="price yearly-price" style="display: none;">$3.99<span>/mo</span></div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> 1 Website</li>
+                            <li><i class="fas fa-check"></i> 10GB SSD Storage</li>
+                            <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
+                            <li><i class="fas fa-check"></i> Free SSL Certificate</li>
+                            <li><i class="fas fa-check"></i> 5 Email Accounts</li>
+                            <li><i class="fas fa-check"></i> 24/7 Support</li>
+                        </ul>
+                        <button class="btn btn-primary payment-btn" data-plan="starter" data-monthly-price="4.99" data-yearly-price="3.99">Get Started</button>
+                    </div>
+                    
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>Business</h3>
+                        <div class="price monthly-price">$9.99<span>/mo</span></div>
+                        <div class="price yearly-price" style="display: none;">$7.99<span>/mo</span></div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Unlimited Websites</li>
+                            <li><i class="fas fa-check"></i> 50GB SSD Storage</li>
+                            <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
+                            <li><i class="fas fa-check"></i> Free SSL Certificate</li>
+                            <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>
+                            <li><i class="fas fa-check"></i> Free Domain (1st year)</li>
+                            <li><i class="fas fa-check"></i> Daily Backups</li>
+                            <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
+                        </ul>
+                        <button class="btn btn-primary payment-btn" data-plan="business" data-monthly-price="9.99" data-yearly-price="7.99">Get Started</button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price monthly-price">$19.99<span>/mo</span></div>
+                        <div class="price yearly-price" style="display: none;">$15.99<span>/mo</span></div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Unlimited Websites</li>
+                            <li><i class="fas fa-check"></i> 100GB SSD Storage</li>
+                            <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
+                            <li><i class="fas fa-check"></i> Free SSL Certificate</li>
+                            <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>
+                            <li><i class="fas fa-check"></i> Free Domain (1st year)</li>
+                            <li><i class="fas fa-check"></i> Daily Backups</li>
+                            <li><i class="fas fa-check"></i> Free CDN</li>
+                            <li><i class="fas fa-check"></i> Dedicated Resources</li>
+                            <li><i class="fas fa-check"></i> 24/7 VIP Support</li>
+                        </ul>
+                        <button class="btn btn-primary payment-btn" data-plan="enterprise" data-monthly-price="19.99" data-yearly-price="15.99">Get Started</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container testimonials-content">
-            <h2 class="section-title">What Our Customers Say</h2>
-            <p class="section-subtitle">Don't just take our word for it. Here's what our customers have to say about our hosting services.</p>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="testimonial-avatar">
-                        <div class="testimonial-author">
-                            <h4>Sarah Johnson</h4>
-                            <p>Small Business Owner</p>
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials">
+            <div class="container testimonials-content">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Don't just take our word for it. Here's what our customers have to say about our hosting services.</p>
+                
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="testimonial-avatar">
+                            <div class="testimonial-author">
+                                <h4>Sarah Johnson</h4>
+                                <p>Small Business Owner</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"I switched to Digital Nexify six months ago and my website has never been faster. Their support team helped me migrate my site and it was completely painless. Highly recommended!"</p>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="testimonial-avatar">
+                            <div class="testimonial-author">
+                                <h4>Michael Chen</h4>
+                                <p>Web Developer</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p>"As a developer, I appreciate the performance and flexibility of Digital Nexify's servers. The one-click staging environments are a game-changer for my workflow."</p>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Rodriguez" class="testimonial-avatar">
+                            <div class="testimonial-author">
+                                <h4>Emily Rodriguez</h4>
+                                <p>Blogger</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p>"My blog traffic has grown significantly since moving to Digital Nexify. The uptime is excellent and whenever I've needed help, their support team responds within minutes."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq" id="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Have questions? We've got answers. If you can't find what you're looking for, our support team is always happy to help.</p>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What is web hosting?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Web hosting is a service that allows organizations and individuals to post a website or web page onto the Internet. A web host, or web hosting service provider, is a business that provides the technologies and services needed for the website or webpage to be viewed on the Internet.</p>
                         </div>
                     </div>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"I switched to Digital Nexify six months ago and my website has never been faster. Their support team helped me migrate my site and it was completely painless. Highly recommended!"</p>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="testimonial-avatar">
-                        <div class="testimonial-author">
-                            <h4>Michael Chen</h4>
-                            <p>Web Developer</p>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you offer a money-back guarantee?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! We offer a 30-day money-back guarantee on all our hosting plans. If you're not completely satisfied with our service, you can cancel within the first 30 days for a full refund, no questions asked.</p>
                         </div>
                     </div>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"As a developer, I appreciate the performance and flexibility of Digital Nexify's servers. The one-click staging environments are a game-changer for my workflow."</p>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Rodriguez" class="testimonial-avatar">
-                        <div class="testimonial-author">
-                            <h4>Emily Rodriguez</h4>
-                            <p>Blogger</p>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can I upgrade or downgrade my plan later?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! You can upgrade or downgrade your hosting plan at any time through your control panel. The change will take effect immediately, and you'll only pay the prorated difference for the remainder of your billing cycle.</p>
                         </div>
                     </div>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Do you provide website migration services?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, we offer free website migration services for all new customers. Our expert team will handle the entire migration process for you, ensuring zero downtime for your website during the transition.</p>
+                        </div>
                     </div>
-                    <p>"My blog traffic has grown significantly since moving to Digital Nexify. The uptime is excellent and whenever I've needed help, their support team responds within minutes."</p>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What kind of support do you offer?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We provide 24/7/365 support via live chat, email, and phone. Our support team consists of experienced hosting professionals who can assist you with any technical issues, questions about your account, or help with website optimization.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <p class="section-subtitle">Have questions? We've got answers. If you can't find what you're looking for, our support team is always happy to help.</p>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What is web hosting?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Web hosting is a service that allows organizations and individuals to post a website or web page onto the Internet. A web host, or web hosting service provider, is a business that provides the technologies and services needed for the website or webpage to be viewed on the Internet.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you offer a money-back guarantee?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes! We offer a 30-day money-back guarantee on all our hosting plans. If you're not completely satisfied with our service, you can cancel within the first 30 days for a full refund, no questions asked.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Can I upgrade or downgrade my plan later?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Absolutely! You can upgrade or downgrade your hosting plan at any time through your control panel. The change will take effect immediately, and you'll only pay the prorated difference for the remainder of your billing cycle.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>Do you provide website migration services?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, we offer free website migration services for all new customers. Our expert team will handle the entire migration process for you, ensuring zero downtime for your website during the transition.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <span>What kind of support do you offer?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We provide 24/7/365 support via live chat, email, and phone. Our support team consists of experienced hosting professionals who can assist you with any technical issues, questions about your account, or help with website optimization.</p>
-                    </div>
+        <!-- CTA Section -->
+        <section class="cta">
+            <div class="container cta-content">
+                <h2>Ready to Launch Your Website?</h2>
+                <p>Join thousands of satisfied customers who trust Digital Nexify for their web hosting needs. Get started today and experience the difference.</p>
+                <div class="cta-btns">
+                    <a href="#pricing" class="btn btn-primary">Choose Your Plan</a>
+                    <a href="mailto:amboyeted@gmail.com" class="btn btn-outline">Contact Sales</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container cta-content">
-            <h2>Ready to Launch Your Website?</h2>
-            <p>Join thousands of satisfied customers who trust Digital Nexify for their web hosting needs. Get started today and experience the difference.</p>
-            <div class="cta-btns">
-                <a href="#pricing" class="btn btn-primary">Choose Your Plan</a>
-                <a href="mailto:amboyeted@gmail.com" class="btn btn-outline">Contact Sales</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>Digital Nexify</h3>
-                    <p>Premium web hosting solutions with unmatched performance, security, and support.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <h3>Digital Nexify</h3>
+                        <p>Premium web hosting solutions with unmatched performance, security, and support.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h3>Hosting</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Shared Hosting</a></li>
+                            <li><a href="#">WordPress Hosting</a></li>
+                            <li><a href="#">VPS Hosting</a></li>
+                            <li><a href="#">Dedicated Servers</a></li>
+                            <li><a href="#">Cloud Hosting</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h3>Company</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="mailto:amboyeted@gmail.com">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-col">
+                        <h3>Legal</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Acceptable Use Policy</a></li>
+                            <li><a href="#">Refund Policy</a></li>
+                            <li><a href="#">SLA</a></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="footer-col">
-                    <h3>Hosting</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Shared Hosting</a></li>
-                        <li><a href="#">WordPress Hosting</a></li>
-                        <li><a href="#">VPS Hosting</a></li>
-                        <li><a href="#">Dedicated Servers</a></li>
-                        <li><a href="#">Cloud Hosting</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Press</a></li>
-                        <li><a href="mailto:amboyeted@gmail.com">Contact Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h3>Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Acceptable Use Policy</a></li>
-                        <li><a href="#">Refund Policy</a></li>
-                        <li><a href="#">SLA</a></li>
-                    </ul>
+                <div class="footer-bottom">
+                    <p>&copy; 2023 Digital Nexify. All rights reserved.</p>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2023 Digital Nexify. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <!-- PesaPal JS SDK -->
     <script src="https://www.pesapal.com/api/PostPesapalDirectOrderV4" type="text/javascript"></script>
@@ -1491,6 +1897,8 @@
         
         // Auth Modal Handling
         const authModal = document.getElementById('authModal');
+        const verificationModal = document.getElementById('verificationModal');
+        const welcomeModal = document.getElementById('welcomeModal');
         const loginBtn = document.getElementById('loginBtn');
         const authTabs = document.querySelectorAll('.auth-tab');
         const authForms = document.querySelectorAll('.auth-form');
@@ -1498,6 +1906,13 @@
         // Open auth modal
         loginBtn.addEventListener('click', function(e) {
             e.preventDefault();
+            
+            // Check if user is already logged in
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                showDashboard();
+                return;
+            }
+            
             authModal.style.display = 'block';
         });
         
@@ -1533,11 +1948,39 @@
                 return;
             }
             
-            // In a real app, you would send this to your backend
-            console.log('Login attempt with:', email, password);
+            // Check if user exists (simulated)
+            const users = JSON.parse(localStorage.getItem('users') || [];
+            const user = users.find(u => u.email === email);
             
-            // Simulate successful login
-            simulateLogin(email);
+            if (!user) {
+                alert('User not registered. Please sign up first.');
+                // Switch to signup tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                authTabs[1].classList.add('active');
+                
+                authForms.forEach(f => f.classList.remove('active'));
+                document.getElementById('signupForm').classList.add('active');
+                
+                // Pre-fill email
+                document.getElementById('signup-email').value = email;
+                return;
+            }
+            
+            // Check password (in real app, this would be hashed)
+            if (user.password !== password) {
+                alert('Incorrect password');
+                return;
+            }
+            
+            // Check if email is verified
+            if (!user.verified) {
+                alert('Please verify your email first. Check your inbox for the verification link.');
+                showVerificationModal(email);
+                return;
+            }
+            
+            // Successful login
+            loginUser(user);
         });
         
         // Signup Form Submission
@@ -1560,41 +2003,301 @@
                 return;
             }
             
-            // In a real app, you would send this to your backend
-            console.log('Signup attempt with:', name, email, password);
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
             
-            // Simulate successful signup and login
-            simulateLogin(email);
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users') || [];
+            const userExists = users.some(u => u.email === email);
+            
+            if (userExists) {
+                alert('An account with this email already exists. Please login instead.');
+                // Switch to login tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                authTabs[0].classList.add('active');
+                
+                authForms.forEach(f => f.classList.remove('active'));
+                document.getElementById('loginForm').classList.add('active');
+                
+                // Pre-fill email
+                document.getElementById('login-email').value = email;
+                return;
+            }
+            
+            // Create new user (in real app, password would be hashed)
+            const newUser = {
+                id: Date.now().toString(),
+                name,
+                email,
+                password,
+                verified: false,
+                createdAt: new Date().toISOString(),
+                avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Show verification modal
+            showVerificationModal(email);
+            
+            // Close auth modal
+            authModal.style.display = 'none';
+        });
+        
+        // Show verification modal
+        function showVerificationModal(email) {
+            verificationModal.style.display = 'block';
+            
+            // Set up resend verification
+            document.getElementById('resendVerification').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert(`Verification email resent to ${email}`);
+            });
+        }
+        
+        // Simulate email verification (in real app, this would be a link in the email)
+        function verifyEmail(email) {
+            const users = JSON.parse(localStorage.getItem('users') || [];
+            const userIndex = users.findIndex(u => u.email === email);
+            
+            if (userIndex !== -1) {
+                users[userIndex].verified = true;
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Show welcome modal
+                verificationModal.style.display = 'none';
+                welcomeModal.style.display = 'block';
+                
+                // Set up welcome modal button
+                document.getElementById('startExploring').addEventListener('click', function() {
+                    welcomeModal.style.display = 'none';
+                    loginUser(users[userIndex]);
+                });
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Login user
+        function loginUser(user) {
+            // Update UI to show logged in state
+            loginBtn.textContent = 'My Account';
+            loginBtn.classList.add('logged-in');
+            
+            // Close any open modals
+            authModal.style.display = 'none';
+            verificationModal.style.display = 'none';
+            welcomeModal.style.display = 'none';
+            
+            // Store user session (in a real app, use proper session management)
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // Show dashboard
+            showDashboard();
+        }
+        
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('accountDashboard').style.display = 'block';
+            
+            // Load user data
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                document.getElementById('userFullName').textContent = user.name;
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('userAvatar').src = user.avatar;
+                document.getElementById('profile-name').value = user.name;
+                document.getElementById('profile-email').value = user.email;
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Dashboard navigation
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active menu item
+                document.querySelectorAll('.sidebar-menu a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const section = this.getAttribute('data-section');
+                document.querySelectorAll('.dashboard-section').forEach(sec => {
+                    sec.style.display = 'none';
+                });
+                document.getElementById(`${section}Section`).style.display = 'block';
+            });
+        });
+        
+        // Profile form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('profile-name').value;
+            const email = document.getElementById('profile-email').value;
+            const phone = document.getElementById('profile-phone').value;
+            
+            // Update user data
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                user.name = name;
+                user.email = email;
+                
+                // Update in users array
+                const users = JSON.parse(localStorage.getItem('users') || []);
+                const userIndex = users.findIndex(u => u.id === user.id);
+                if (userIndex !== -1) {
+                    users[userIndex] = user;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // Update UI
+                document.getElementById('userFullName').textContent = name;
+                document.getElementById('userEmail').textContent = email;
+                
+                alert('Profile updated successfully');
+            }
+        });
+        
+        // Avatar upload
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('userAvatar').src = event.target.result;
+                    
+                    // Update user data
+                    const user = JSON.parse(localStorage.getItem('currentUser'));
+                    if (user) {
+                        user.avatar = event.target.result;
+                        
+                        // Update in users array
+                        const users = JSON.parse(localStorage.getItem('users') || []);
+                        const userIndex = users.findIndex(u => u.id === user.id);
+                        if (userIndex !== -1) {
+                            users[userIndex] = user;
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                        
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Password form submission
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            // Validation
+            if (newPassword !== confirmNewPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
+            
+            // Check current password (in real app, this would be hashed)
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user.password !== currentPassword) {
+                alert('Current password is incorrect');
+                return;
+            }
+            
+            // Update password
+            user.password = newPassword;
+            
+            // Update in users array
+            const users = JSON.parse(localStorage.getItem('users') || []);
+            const userIndex = users.findIndex(u => u.id === user.id);
+            if (userIndex !== -1) {
+                users[userIndex] = user;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            alert('Password updated successfully');
+            document.getElementById('passwordForm').reset();
+        });
+        
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Clear session
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            
+            // Update UI
+            loginBtn.textContent = 'Login';
+            loginBtn.classList.remove('logged-in');
+            
+            // Show main content
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('accountDashboard').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
         });
         
         // Forgot Password
         document.getElementById('forgotPassword').addEventListener('click', function(e) {
             e.preventDefault();
-            alert('Password reset link will be sent to your email if an account exists.');
+            const email = document.getElementById('login-email').value;
+            
+            if (!email) {
+                alert('Please enter your email address first');
+                return;
+            }
+            
+            alert(`Password reset link will be sent to ${email} if an account exists.`);
         });
-        
-        // Simulate user login
-        function simulateLogin(email) {
-            // Update UI to show logged in state
-            loginBtn.textContent = 'My Account';
-            loginBtn.classList.add('logged-in');
-            
-            // Close modal
-            authModal.style.display = 'none';
-            
-            // Store user session (in a real app, use proper session management)
-            localStorage.setItem('userEmail', email);
-            localStorage.setItem('isLoggedIn', 'true');
-            
-            // Show welcome message
-            alert(`Welcome back, ${email}!`);
-        }
         
         // Check if user is already logged in
         if (localStorage.getItem('isLoggedIn') === 'true') {
-            const userEmail = localStorage.getItem('userEmail');
-            loginBtn.textContent = 'My Account';
-            loginBtn.classList.add('logged-in');
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                loginBtn.textContent = 'My Account';
+                loginBtn.classList.add('logged-in');
+                
+                // Check if we're on the dashboard
+                if (window.location.hash === '#account') {
+                    showDashboard();
+                }
+            }
+        }
+        
+        // Check for email verification in URL (simulated)
+        if (window.location.search.includes('verify_email=')) {
+            const email = decodeURIComponent(window.location.search.split('=')[1]);
+            if (verifyEmail(email)) {
+                // Remove the query parameter
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
         }
         
         // Payment Modal Handling
@@ -1611,6 +2314,8 @@
                 paymentModal.style.display = 'none';
                 authModal.style.display = 'none';
                 paymentStatusModal.style.display = 'none';
+                verificationModal.style.display = 'none';
+                welcomeModal.style.display = 'none';
             });
         });
         
@@ -1620,6 +2325,8 @@
                 paymentModal.style.display = 'none';
                 authModal.style.display = 'none';
                 paymentStatusModal.style.display = 'none';
+                verificationModal.style.display = 'none';
+                welcomeModal.style.display = 'none';
             }
         });
         
@@ -1745,9 +2452,8 @@
             });
             
             document.getElementById('continueToDashboard').addEventListener('click', function() {
-                alert('Redirecting to your account dashboard...');
                 paymentStatusModal.style.display = 'none';
-                // In a real app, redirect to dashboard
+                showDashboard();
             });
         }
         
@@ -1769,6 +2475,7 @@
             // Add event listeners
             paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
                 paymentStatusModal.style.display = 'none';
+                window.location.href = '#'; // Return to home
             });
             
             document.getElementById('tryAgainPayment').addEventListener('click', function() {
