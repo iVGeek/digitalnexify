@@ -17,6 +17,7 @@
             --text-color: #e0e0e0;
             --text-muted: #b0b0b0;
             --success-color: #00e676;
+            --error-color: #ff4444;
         }
         
         * {
@@ -107,7 +108,7 @@
             margin: 0 auto 3rem;
         }
         
-        /* Payment Modal Styles */
+        /* Auth Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -125,9 +126,10 @@
             margin: 5% auto;
             padding: 30px;
             border-radius: 10px;
-            max-width: 600px;
+            max-width: 500px;
             box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
         
         .close-modal {
@@ -161,6 +163,76 @@
             background-color: var(--darker-bg);
             color: var(--text-color);
             font-size: 16px;
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .form-footer a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 5px;
+            border-radius: 8px;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-tab.active {
+            background-color: var(--primary-color);
+            color: #111;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        /* Payment Status Modal */
+        .payment-status {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .payment-status-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        
+        .payment-status.success .payment-status-icon {
+            color: var(--success-color);
+        }
+        
+        .payment-status.error .payment-status-icon {
+            color: var(--error-color);
+        }
+        
+        .payment-status h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .payment-status p {
+            margin-bottom: 25px;
+            font-size: 1.1rem;
         }
         
         /* Header Styles */
@@ -514,15 +586,6 @@
         .pricing-features li i {
             color: var(--success-color);
             margin-right: 10px;
-        }
-        
-        /* Payment Form Styles */
-        .payment-form {
-            margin-top: 20px;
-        }
-        
-        .payment-form .btn {
-            width: 100%;
         }
         
         /* Testimonials Section */
@@ -894,7 +957,7 @@
                     <li><a href="#pricing">Pricing</a></li>
                     <li><a href="#testimonials">Testimonials</a></li>
                     <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#" class="btn btn-outline">Login</a></li>
+                    <li><a href="#" class="btn btn-outline" id="loginBtn">Login</a></li>
                 </ul>
                 <button class="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
@@ -902,6 +965,54 @@
             </nav>
         </div>
     </header>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="signup">Sign Up</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div class="form-footer">
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" class="auth-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm-password">Confirm Password</label>
+                    <input type="password" id="signup-confirm-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Payment Modal -->
     <div id="paymentModal" class="modal">
@@ -928,6 +1039,30 @@
                 <input type="hidden" id="selected-plan">
                 <button type="submit" class="btn btn-primary">Proceed to Payment</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Payment Status Modal -->
+    <div id="paymentStatusModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="payment-status success">
+                <div class="payment-status-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Payment Successful!</h3>
+                <p>Thank you for your purchase. Your hosting account is being set up and you'll receive confirmation details shortly.</p>
+                <button class="btn btn-primary" id="continueToDashboard">Continue to Dashboard</button>
+            </div>
+            
+            <div class="payment-status error" style="display: none;">
+                <div class="payment-status-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <h3>Payment Failed</h3>
+                <p id="payment-error-message">There was an issue processing your payment. Please try again or contact support.</p>
+                <button class="btn btn-primary" id="tryAgainPayment">Try Again</button>
+            </div>
         </div>
     </div>
 
@@ -1215,7 +1350,7 @@
             <p>Join thousands of satisfied customers who trust Digital Nexify for their web hosting needs. Get started today and experience the difference.</p>
             <div class="cta-btns">
                 <a href="#pricing" class="btn btn-primary">Choose Your Plan</a>
-                <a href="#" class="btn btn-outline">Contact Sales</a>
+                <a href="mailto:amboyeted@gmail.com" class="btn btn-outline">Contact Sales</a>
             </div>
         </div>
     </section>
@@ -1253,7 +1388,7 @@
                         <li><a href="#">Careers</a></li>
                         <li><a href="#">Blog</a></li>
                         <li><a href="#">Press</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="mailto:amboyeted@gmail.com">Contact Us</a></li>
                     </ul>
                 </div>
                 
@@ -1354,38 +1489,160 @@
             });
         });
         
+        // Auth Modal Handling
+        const authModal = document.getElementById('authModal');
+        const loginBtn = document.getElementById('loginBtn');
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = document.querySelectorAll('.auth-form');
+        
+        // Open auth modal
+        loginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            authModal.style.display = 'block';
+        });
+        
+        // Switch between login/signup tabs
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                
+                // Update active tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding form
+                authForms.forEach(form => {
+                    form.classList.remove('active');
+                    if (form.id === `${tabName}Form`) {
+                        form.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Login Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // In a real app, you would send this to your backend
+            console.log('Login attempt with:', email, password);
+            
+            // Simulate successful login
+            simulateLogin(email);
+        });
+        
+        // Signup Form Submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // In a real app, you would send this to your backend
+            console.log('Signup attempt with:', name, email, password);
+            
+            // Simulate successful signup and login
+            simulateLogin(email);
+        });
+        
+        // Forgot Password
+        document.getElementById('forgotPassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Password reset link will be sent to your email if an account exists.');
+        });
+        
+        // Simulate user login
+        function simulateLogin(email) {
+            // Update UI to show logged in state
+            loginBtn.textContent = 'My Account';
+            loginBtn.classList.add('logged-in');
+            
+            // Close modal
+            authModal.style.display = 'none';
+            
+            // Store user session (in a real app, use proper session management)
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // Show welcome message
+            alert(`Welcome back, ${email}!`);
+        }
+        
+        // Check if user is already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            const userEmail = localStorage.getItem('userEmail');
+            loginBtn.textContent = 'My Account';
+            loginBtn.classList.add('logged-in');
+        }
+        
         // Payment Modal Handling
-        const modal = document.getElementById('paymentModal');
-        const closeModal = document.querySelector('.close-modal');
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentStatusModal = document.getElementById('paymentStatusModal');
+        const closeModals = document.querySelectorAll('.close-modal');
         const paymentBtns = document.querySelectorAll('.payment-btn');
         const customerForm = document.getElementById('customerDetailsForm');
         const pesapalForm = document.getElementById('pesapal-payment-form');
         
-        // Open modal when payment button is clicked
+        // Close modals when clicking X
+        closeModals.forEach(btn => {
+            btn.addEventListener('click', function() {
+                paymentModal.style.display = 'none';
+                authModal.style.display = 'none';
+                paymentStatusModal.style.display = 'none';
+            });
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                paymentModal.style.display = 'none';
+                authModal.style.display = 'none';
+                paymentStatusModal.style.display = 'none';
+            }
+        });
+        
+        // Open payment modal when payment button is clicked
         paymentBtns.forEach(btn => {
             btn.addEventListener('click', function() {
+                // Check if user is logged in
+                if (localStorage.getItem('isLoggedIn') !== 'true') {
+                    alert('Please login or create an account to proceed with payment.');
+                    authModal.style.display = 'block';
+                    return;
+                }
+                
                 const plan = this.getAttribute('data-plan');
                 const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
                 const price = isYearly ? this.getAttribute('data-yearly-price') : this.getAttribute('data-monthly-price');
                 
                 document.getElementById('selected-plan').value = plan;
-                modal.style.display = 'block';
+                paymentModal.style.display = 'block';
             });
         });
         
-        // Close modal
-        closeModal.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-        
-        // Close modal when clicking outside
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-        
-        // Handle form submission
+        // Handle payment form submission
         customerForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1415,12 +1672,110 @@
             document.getElementById('pesapal-email').value = email;
             document.getElementById('pesapal-phone').value = phone;
             
-            // Submit to PesaPal
-            pesapalForm.submit();
+            // For demo purposes, we'll simulate payment processing
+            simulatePaymentProcessing(reference, planName, price);
             
-            // Close modal
-            modal.style.display = 'none';
+            // In a real implementation, you would submit to PesaPal:
+            // pesapalForm.submit();
         });
+        
+        // Simulate payment processing (for demo)
+        function simulatePaymentProcessing(reference, planName, amount) {
+            // Close payment modal
+            paymentModal.style.display = 'none';
+            
+            // Show processing animation
+            paymentStatusModal.style.display = 'block';
+            const successDiv = paymentStatusModal.querySelector('.payment-status.success');
+            const errorDiv = paymentStatusModal.querySelector('.payment-status.error');
+            
+            successDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            paymentStatusModal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div class="payment-status" style="text-align: center; padding: 40px 20px;">
+                        <div class="payment-status-icon">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
+                        </div>
+                        <h3>Processing Payment...</h3>
+                        <p>Please wait while we process your payment for the ${planName}.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Add close event listener to new close button
+            paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
+                paymentStatusModal.style.display = 'none';
+            });
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // For demo, we'll randomly succeed or fail
+                const isSuccess = Math.random() > 0.2; // 80% success rate for demo
+                
+                if (isSuccess) {
+                    showPaymentSuccess(reference, planName, amount);
+                } else {
+                    showPaymentError("Payment was declined by your bank. Please check your payment details and try again.");
+                }
+            }, 3000);
+        }
+        
+        function showPaymentSuccess(reference, planName, amount) {
+            paymentStatusModal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div class="payment-status success">
+                        <div class="payment-status-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>Payment Successful!</h3>
+                        <p>Thank you for purchasing the ${planName}. Your reference number is <strong>${reference}</strong>.</p>
+                        <p>We've charged your account <strong>$${amount}</strong>. Your hosting account is being set up and you'll receive confirmation details shortly.</p>
+                        <button class="btn btn-primary" id="continueToDashboard">Continue to Dashboard</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners
+            paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
+                paymentStatusModal.style.display = 'none';
+            });
+            
+            document.getElementById('continueToDashboard').addEventListener('click', function() {
+                alert('Redirecting to your account dashboard...');
+                paymentStatusModal.style.display = 'none';
+                // In a real app, redirect to dashboard
+            });
+        }
+        
+        function showPaymentError(errorMessage) {
+            paymentStatusModal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div class="payment-status error">
+                        <div class="payment-status-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h3>Payment Failed</h3>
+                        <p id="payment-error-message">${errorMessage}</p>
+                        <button class="btn btn-primary" id="tryAgainPayment">Try Again</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners
+            paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
+                paymentStatusModal.style.display = 'none';
+            });
+            
+            document.getElementById('tryAgainPayment').addEventListener('click', function() {
+                paymentStatusModal.style.display = 'none';
+                paymentModal.style.display = 'block';
+            });
+        }
         
         // Add animation when elements come into view
         const animateOnScroll = () => {
