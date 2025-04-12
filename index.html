@@ -1957,13 +1957,24 @@
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            fetch('/api/register', {
+            fetch('https://ivgeek.github.io/api/register', { // Ensure this URL is correct
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password, confirmPassword })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Server returned an error:', response.status, response.statusText);
+                    return response.text(); // Read the response as text for debugging
+                }
+                return response.json(); // Parse JSON if the response is OK
+            })
             .then(data => {
+                if (typeof data === 'string') {
+                    console.error('Non-JSON response received:', data); // Log non-JSON response
+                    alert('An error occurred. Please try again later.');
+                    return;
+                }
                 console.log('Signup response:', data); // Debugging log
                 if (data.success) {
                     alert('Registration successful! Please verify your email.');
