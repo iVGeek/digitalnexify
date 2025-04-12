@@ -1470,7 +1470,7 @@
     </div>
 
     <!-- PesaPal Payment Form (hidden) -->
-    <form id="pesapal-payment-form" method="post" action="https://www.pesapal.com/api/PostPesapalDirectOrderV4" style="display: none;">
+    <form id="pesapal-payment-form" method="post" action="https://www.pesapal.com/api/PostPesapalDirectOrderV3" style="display: none;">
         <input type="hidden" name="Amount" id="pesapal-amount">
         <input type="hidden" name="Description" id="pesapal-description">
         <input type="hidden" name="Type" value="MERCHANT">
@@ -1816,9 +1816,6 @@
         </footer>
     </div>
 
-    <!-- PesaPal JS SDK -->
-    <script src="https://www.pesapal.com/api/PostPesapalDirectOrderV4" type="text/javascript"></script>
-
     <script>
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -1957,7 +1954,7 @@
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            fetch('https://ivgeek.github.io/api/register', { // Ensure this URL is correct
+            fetch('https://ivgeek.github.io/api/register', { // Replace with correct API URL
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password, confirmPassword })
@@ -2018,22 +2015,36 @@
             }
         });
 
-        // PesaPal Payment Integration
+        // AJAX-based Payment Form Submission
         document.getElementById('customerDetailsForm').addEventListener('submit', function (e) {
             e.preventDefault();
+            console.log('Payment form submitted'); // Debugging log
+
             const firstName = document.getElementById('first-name').value;
             const lastName = document.getElementById('last-name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const plan = document.getElementById('selected-plan').value;
 
-            fetch('/api/initiate-payment', {
+            fetch('https://ivgeek.github.io/api/initiate-payment', { // Replace with correct API URL
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ firstName, lastName, email, phone, plan })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Server returned an error:', response.status, response.statusText);
+                    return response.text(); // Read the response as text for debugging
+                }
+                return response.json(); // Parse JSON if the response is OK
+            })
             .then(data => {
+                if (typeof data === 'string') {
+                    console.error('Non-JSON response received:', data); // Log non-JSON response
+                    alert('An error occurred. Please try again later.');
+                    return;
+                }
+                console.log('Payment response:', data); // Debugging log
                 if (data.success) {
                     // Redirect to PesaPal payment page
                     window.location.href = data.paymentUrl;
