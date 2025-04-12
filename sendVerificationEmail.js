@@ -1,27 +1,27 @@
-const sgMail = require('@sendgrid/mail');
+const nodemailer = require('nodemailer');
 
-// Set your SendGrid API key
-sgMail.setApiKey('YOUR_SENDGRID_API_KEY');
+const transporter = nodemailer.createTransport({
+    host: 'sandbox.smtp.mailtrap.io',
+    port: 2525,
+    auth: {
+        user: 'a1bf3fa9d95cd5',
+        pass: 'c789f19cfe3450'
+    }
+});
 
 async function sendVerificationEmail(email, token) {
-    const verificationLink = `https://yourdomain.com/verify?email=${encodeURIComponent(email)}&token=${token}`;
-    const msg = {
-        to: email,
-        from: 'no-reply@digitalnexify.com', // Your verified sender email
-        subject: 'Verify Your Email Address',
-        html: `
-            <p>Thank you for signing up for Digital Nexify!</p>
-            <p>Please verify your email address by clicking the link below:</p>
-            <a href="${verificationLink}">Verify Email</a>
-            <p>If you did not sign up, you can safely ignore this email.</p>
-        `,
-    };
-
     try {
-        await sgMail.send(msg);
-        console.log('Verification email sent to:', email);
+        const info = await transporter.sendMail({
+            from: '"Digital Nexify" <no-reply@digitalnexify.com>',
+            to: email,
+            subject: 'Verify Your Email',
+            text: `Please verify your email by clicking the following link: https://your-website.com/verify?token=${token}`,
+            html: `<p>Please verify your email by clicking the following link:</p><a href="https://your-website.com/verify?token=${token}">Verify Email</a>`
+        });
+
+        console.log('Verification email sent: %s', info.messageId);
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error('Error sending verification email:', error);
     }
 }
 
