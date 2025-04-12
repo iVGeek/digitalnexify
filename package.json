@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "name": "digitalnexify",
+  "version": "1.0.0",
+  "description": "Digital Nexify - Premium Web Hosting Solutions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "iVGeek",
+  "license": "MIT"
+}
