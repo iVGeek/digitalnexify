@@ -1975,499 +1975,518 @@
         // Signup Form Submission
         document.getElementById('signupForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-
+        document.getElementById('signupForm').addEventListener('submit', async function (e) {
             const name = document.getElementById('signup-name').value.trim();
             const email = document.getElementById('signup-email').value.trim();
             const password = document.getElementById('signup-password').value.trim();
             const confirmPassword = document.getElementById('signup-confirm-password').value.trim();
-
-            // Validate input
+            const password = document.getElementById('signup-password').value.trim();
+            // Validate inputword = document.getElementById('signup-confirm-password').value.trim();
             if (!name || !email || !password || !confirmPassword) {
                 alert('Please fill in all fields.');
+                return;| !email || !password || !confirmPassword) {
+            }   alert('Please fill in all fields.');
                 return;
-            }
-
             if (password !== confirmPassword) {
                 alert('Passwords do not match.');
+                return;d !== confirmPassword) {
+            }   alert('Passwords do not match.');
                 return;
-            }
-
             if (password.length < 8) {
                 alert('Password must be at least 8 characters long.');
+                return;d.length < 8) {
+            }   alert('Password must be at least 8 characters long.');
                 return;
-            }
-
             // Check if user already exists
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             if (users.some(u => u.email === email)) {
                 alert('An account with this email already exists. Please log in.');
+                return;ome(u => u.email === email)) {
+            }   alert('An account with this email already exists. Please log in.');
                 return;
-            }
-
             // Create new user
             const newUser = {
                 id: Date.now().toString(),
-                name,
-                email,
+                name,User = {
+                email,te.now().toString(),
                 password,
                 verified: false,
-            };
-
+            };  password,
+                verified: false,
             // Save user locally
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
-
-            // Call backend to send verification email
-            try {
-                await fetch('https://your-backend-url/sendVerificationEmail', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, token: newUser.id }),
-                });
-                alert('Verification email sent. Please check your inbox.');
-            } catch (error) {
-                console.error('Error sending verification email:', error);
-                alert('Failed to send verification email. Please try again.');
-            }
-
-            // Show verification modal
-            showVerificationModal(email);
+            users.push(newUser);
+            // Send verification email using Mailtrapify(users));
+            sendVerificationEmail(email, newUser.id);
+            // Send verification email
+            // Show verification modaloString(); // Example token generation
+            showVerificationModal(email);mail, token);
         });
-
-        // Show verification modal
+            alert('Verification email sent. Please check your inbox.');
+        // Replace the email-sending logic with Mailtrap SMTP configuration
+        const nodemailer = require('nodemailer');
+            showVerificationModal(email);
+        const transporter = nodemailer.createTransport({
+            host: 'sandbox.smtp.mailtrap.io',
+            port: 2525,ation modal
+            auth: {owVerificationModal(email) {
+                user: 'a1bf3fa9d95cd5',play = 'block';
+                pass: 'c789f19cfe3450'esendVerification').addEventListener('click', function (e) {
+            }   e.preventDefault();
+        });     alert(`Verification email resent to ${email}`);
+            });
+        // Example function to send a verification email
+        async function sendVerificationEmail(email, token) {
+            try {user
+                const info = await transporter.sendMail({
+                    from: '"Digital Nexify" <no-reply@digitalnexify.com>',
+                    to: email,em('isLoggedIn', 'true');
+                    subject: 'Verify Your Email',
+                    text: `Please verify your email by clicking the following link: https://your-website.com/verify?token=${token}`,
+                    html: `<p>Please verify your email by clicking the following link:</p><a href="https://your-website.com/verify?token=${token}">Verify Email</a>`
+                });
+        // Simulate email verification (in real app, this would be a link in the email)
+                console.log('Verification email sent: %s', info.messageId);
+            } catch (error) {N.parse(localStorage.getItem('users') || []);
+                console.error('Error sending verification email:', error);
+            }
+        }   if (userIndex !== -1) {
+                users[userIndex].verified = true;
+        // Show verification modalem('users', JSON.stringify(users));
         function showVerificationModal(email) {
             verificationModal.style.display = 'block';
             document.getElementById('resendVerification').addEventListener('click', function (e) {
-                e.preventDefault();
+                e.preventDefault();display = 'block';
                 alert(`Verification email resent to ${email}`);
-            });
-        }
-
-        // Login user
+            }); // Set up welcome modal button
+        }       document.getElementById('startExploring').addEventListener('click', function() {
+                    welcomeModal.style.display = 'none';
+        // Login useroginUser(users[userIndex]);
         function loginUser(user) {
             localStorage.setItem('currentUser', JSON.stringify(user));
             localStorage.setItem('isLoggedIn', 'true');
             authModal.style.display = 'none';
             showDashboard();
+        }   return false;
         }
-
         // Simulate email verification (in real app, this would be a link in the email)
         function verifyEmail(email) {
             const users = JSON.parse(localStorage.getItem('users') || []);
-            const userIndex = users.findIndex(u => u.email === email);
-            
+            const userIndex = users.findIndex(u => u.email === email);ne';
+            document.getElementById('accountDashboard').style.display = 'block';
             if (userIndex !== -1) {
                 users[userIndex].verified = true;
-                localStorage.setItem('users', JSON.stringify(users));
-                
-                // Show welcome modal
-                verificationModal.style.display = 'none';
-                welcomeModal.style.display = 'block';
-                
-                // Set up welcome modal button
+                localStorage.setItem('users', JSON.stringify(users));'));
+                user) {
+                // Show welcome modalId('userFullName').textContent = user.name;
+                verificationModal.style.display = 'none';Content = user.email;
+                welcomeModal.style.display = 'block';.src = user.avatar;
+                document.getElementById('profile-name').value = user.name;
+                // Set up welcome modal buttonle-email').value = user.email;
                 document.getElementById('startExploring').addEventListener('click', function() {
                     welcomeModal.style.display = 'none';
                     loginUser(users[userIndex]);
-                });
+                });scrollTo(0, 0);
                 
                 return true;
-            }
-            
-            return false;
-        }
-        
-        // Show dashboard
-        function showDashboard() {
+            }shboard navigation
+            ment.querySelectorAll('.sidebar-menu a').forEach(link => {
+            return false;Listener('click', function(e) {
+        }       e.preventDefault();
+                
+        // Show dashboard active menu item
+        function showDashboard() {ctorAll('.sidebar-menu a').forEach(a => {
             document.getElementById('mainContent').style.display = 'none';
             document.getElementById('accountDashboard').style.display = 'block';
-            
+                this.classList.add('active');
             // Load user data
             const user = JSON.parse(localStorage.getItem('currentUser'));
-            if (user) {
+            if (user) {ection = this.getAttribute('data-section');
                 document.getElementById('userFullName').textContent = user.name;
                 document.getElementById('userEmail').textContent = user.email;
                 document.getElementById('userAvatar').src = user.avatar;
-                document.getElementById('profile-name').value = user.name;
+                document.getElementById('profile-name').value = user.name; = 'block';
                 document.getElementById('profile-email').value = user.email;
             }
             
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-        
-        // Dashboard navigation
-        document.querySelectorAll('.sidebar-menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
+            // Scroll to topission
+            window.scrollTo(0, 0);rofileForm').addEventListener('submit', function(e) {
+        }   e.preventDefault();
+            
+        // Dashboard navigationnt.getElementById('profile-name').value;
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {ue;
+            link.addEventListener('click', function(e) {le-phone').value;
                 e.preventDefault();
-                
-                // Update active menu item
+                pdate user data
+                // Update active menu itemtorage.getItem('currentUser'));
                 document.querySelectorAll('.sidebar-menu a').forEach(a => {
                     a.classList.remove('active');
-                });
+                });r.email = email;
                 this.classList.add('active');
-                
-                // Show corresponding section
-                const section = this.getAttribute('data-section');
+                // Update in users array
+                // Show corresponding sectionlStorage.getItem('users') || []);
+                const section = this.getAttribute('data-section');er.id);
                 document.querySelectorAll('.dashboard-section').forEach(sec => {
                     sec.style.display = 'none';
-                });
+                }); localStorage.setItem('users', JSON.stringify(users));
                 document.getElementById(`${section}Section`).style.display = 'block';
-            });
-        });
-        
+            }); 
+        });     localStorage.setItem('currentUser', JSON.stringify(user));
+                
         // Profile form submission
         document.getElementById('profileForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+            e.preventDefault();mentById('userEmail').textContent = email;
+                
             const name = document.getElementById('profile-name').value;
             const email = document.getElementById('profile-email').value;
             const phone = document.getElementById('profile-phone').value;
             
             // Update user data
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if (user) {
+            const user = JSON.parse(localStorage.getItem('currentUser')); function(e) {
+            if (user) {= e.target.files[0];
                 user.name = name;
-                user.email = email;
-                
-                // Update in users array
+                user.email = email;FileReader();
+                reader.onload = function(event) {
+                // Update in users arrayyId('userAvatar').src = event.target.result;
                 const users = JSON.parse(localStorage.getItem('users') || []);
                 const userIndex = users.findIndex(u => u.id === user.id);
-                if (userIndex !== -1) {
+                if (userIndex !== -1) {arse(localStorage.getItem('currentUser'));
                     users[userIndex] = user;
                     localStorage.setItem('users', JSON.stringify(users));
-                }
-                
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                
-                // Update UI
+                }       
+                        // Update in users array
+                localStorage.setItem('currentUser', JSON.stringify(user));rs') || []);
+                        const userIndex = users.findIndex(u => u.id === user.id);
+                // Update UIuserIndex !== -1) {
                 document.getElementById('userFullName').textContent = name;
-                document.getElementById('userEmail').textContent = email;
-                
+                document.getElementById('userEmail').textContent = email;users));
+                        }
                 alert('Profile updated successfully');
-            }
-        });
-        
-        // Avatar upload
+            }           localStorage.setItem('currentUser', JSON.stringify(user));
+        });         }
+                };
+        // Avatar uploadeadAsDataURL(file);
         document.getElementById('avatarInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function(event) {ddEventListener('submit', function(e) {
                     document.getElementById('userAvatar').src = event.target.result;
                     
-                    // Update user data
+                    // Update user dataument.getElementById('current-password').value;
                     const user = JSON.parse(localStorage.getItem('currentUser'));
-                    if (user) {
+                    if (user) {sword = document.getElementById('confirm-new-password').value;
                         user.avatar = event.target.result;
-                        
-                        // Update in users array
+                        n
+                        // Update in users arrayrd) {
                         const users = JSON.parse(localStorage.getItem('users') || []);
                         const userIndex = users.findIndex(u => u.id === user.id);
                         if (userIndex !== -1) {
                             users[userIndex] = user;
                             localStorage.setItem('users', JSON.stringify(users));
-                        }
+                        }ssword must be at least 8 characters');
                         
                         localStorage.setItem('currentUser', JSON.stringify(user));
                     }
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-        
+                };ck current password (in real app, this would be hashed)
+                reader.readAsDataURL(file);orage.getItem('currentUser'));
+            }f (user.password !== currentPassword) {
+        });     alert('Current password is incorrect');
+                return;
         // Password form submission
         document.getElementById('passwordForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+            user.password = newPassword;
             const currentPassword = document.getElementById('current-password').value;
             const newPassword = document.getElementById('new-password').value;
             const confirmNewPassword = document.getElementById('confirm-new-password').value;
-            
-            // Validation
+            const userIndex = users.findIndex(u => u.id === user.id);
+            // Validation !== -1) {
             if (newPassword !== confirmNewPassword) {
-                alert('New passwords do not match');
+                alert('New passwords do not match');tringify(users));
                 return;
             }
-            
+            localStorage.setItem('currentUser', JSON.stringify(user));
             if (newPassword.length < 8) {
                 alert('Password must be at least 8 characters');
-                return;
+                return;tElementById('passwordForm').reset();
             }
             
             // Check current password (in real app, this would be hashed)
-            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const user = JSON.parse(localStorage.getItem('currentUser'));nction(e) {
             if (user.password !== currentPassword) {
                 alert('Current password is incorrect');
-                return;
-            }
-            
+                return;ssion
+            }ocalStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
             // Update password
             user.password = newPassword;
-            
-            // Update in users array
+            loginBtn.textContent = 'Login';
+            // Update in users arraye('logged-in');
             const users = JSON.parse(localStorage.getItem('users') || []);
             const userIndex = users.findIndex(u => u.id === user.id);
-            if (userIndex !== -1) {
-                users[userIndex] = user;
+            if (userIndex !== -1) {('mainContent').style.display = 'block';
+                users[userIndex] = user;ountDashboard').style.display = 'none';
                 localStorage.setItem('users', JSON.stringify(users));
-            }
-            
+            }/ Scroll to top
+            window.scrollTo(0, 0);
             localStorage.setItem('currentUser', JSON.stringify(user));
             
             alert('Password updated successfully');
-            document.getElementById('passwordForm').reset();
-        });
-        
+            document.getElementById('passwordForm').reset();stener('click', function(e) {
+        }); e.preventDefault();
+            const email = document.getElementById('login-email').value;
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            
+            e.preventDefault();nter your email address first');
+                return;
             // Clear session
             localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('currentUser');
+            localStorage.removeItem('currentUser'); to ${email} if an account exists.`);
             
             // Update UI
-            loginBtn.textContent = 'Login';
-            loginBtn.classList.remove('logged-in');
-            
+            loginBtn.textContent = 'Login';in
+            loginBtn.classList.remove('logged-in');'true') {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
             // Show main content
             document.getElementById('mainContent').style.display = 'block';
             document.getElementById('accountDashboard').style.display = 'none';
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        });
-        
+                
+            // Scroll to topwe're on the dashboard
+            window.scrollTo(0, 0);n.hash === '#account') {
+        });         showDashboard();
+                }
         // Forgot Password
         document.getElementById('forgotPassword').addEventListener('click', function(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
-            
-            if (!email) {
+            window.location.search.includes('verify_email=')) {
+            if (!email) { decodeURIComponent(window.location.search.split('=')[1]);
                 alert('Please enter your email address first');
-                return;
+                return;ve the query parameter
+            }   window.history.replaceState({}, document.title, window.location.pathname);
             }
-            
             alert(`Password reset link will be sent to ${email} if an account exists.`);
         });
-        
-        // Check if user is already logged in
-        if (localStorage.getItem('isLoggedIn') === 'true') {
+        // Payment Modal Handling
+        // Check if user is already logged inentById('paymentModal');
+        if (localStorage.getItem('isLoggedIn') === 'true') {paymentStatusModal');
             const user = JSON.parse(localStorage.getItem('currentUser'));
-            if (user) {
-                loginBtn.textContent = 'My Account';
-                loginBtn.classList.add('logged-in');
+            if (user) {ns = document.querySelectorAll('.payment-btn');
+                loginBtn.textContent = 'My Account';('customerDetailsForm');
+                loginBtn.classList.add('logged-in');'pesapal-payment-form');
                 
                 // Check if we're on the dashboard
                 if (window.location.hash === '#account') {
-                    showDashboard();
-                }
-            }
-        }
-        
+                    showDashboard();ick', function() {
+                }aymentModal.style.display = 'none';
+            }   authModal.style.display = 'none';
+        }       paymentStatusModal.style.display = 'none';
+                verificationModal.style.display = 'none';
         // Check for email verification in URL (simulated)
         if (window.location.search.includes('verify_email=')) {
             const email = decodeURIComponent(window.location.search.split('=')[1]);
             if (verifyEmail(email)) {
                 // Remove the query parameter
                 window.history.replaceState({}, document.title, window.location.pathname);
-            }
-        }
-        
-        // Payment Modal Handling
+            }f (e.target.classList.contains('modal')) {
+        }       paymentModal.style.display = 'none';
+                authModal.style.display = 'none';
+        // Payment Modal Handlingl.style.display = 'none';
         const paymentModal = document.getElementById('paymentModal');
         const paymentStatusModal = document.getElementById('paymentStatusModal');
         const closeModals = document.querySelectorAll('.close-modal');
         const paymentBtns = document.querySelectorAll('.payment-btn');
         const customerForm = document.getElementById('customerDetailsForm');
         const pesapalForm = document.getElementById('pesapal-payment-form');
-        
-        // Close modals when clicking X
-        closeModals.forEach(btn => {
-            btn.addEventListener('click', function() {
-                paymentModal.style.display = 'none';
-                authModal.style.display = 'none';
+        paymentBtns.forEach(btn => {
+        // Close modals when clicking X', function() {
+        closeModals.forEach(btn => {logged in
+            btn.addEventListener('click', function() { !== 'true') {
+                paymentModal.style.display = 'none'; account to proceed with payment.');
+                authModal.style.display = 'none';ock';
                 paymentStatusModal.style.display = 'none';
                 verificationModal.style.display = 'none';
                 welcomeModal.style.display = 'none';
-            });
-        });
-        
+            }); const plan = this.getAttribute('data-plan');
+        });     const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
+                const price = isYearly ? this.getAttribute('data-yearly-price') : this.getAttribute('data-monthly-price');
         // Close modals when clicking outside
-        window.addEventListener('click', function(e) {
+        window.addEventListener('click', function(e) {').value = plan;
             if (e.target.classList.contains('modal')) {
                 paymentModal.style.display = 'none';
                 authModal.style.display = 'none';
                 paymentStatusModal.style.display = 'none';
                 verificationModal.style.display = 'none';
-                welcomeModal.style.display = 'none';
-            }
+                welcomeModal.style.display = 'none';c function (e) {
+            }.preventDefault();
         });
-        
-        // Open payment modal when payment button is clicked
-        paymentBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Check if user is logged in
-                if (localStorage.getItem('isLoggedIn') !== 'true') {
+            // Get form values
+        // Open payment modal when payment button is clicked-name').value;
+        paymentBtns.forEach(btn => {t.getElementById('last-name').value;
+            btn.addEventListener('click', function() {il').value;
+                // Check if user is logged inById('phone').value;
+                if (localStorage.getItem('isLoggedIn') !== 'true') {lue;
                     alert('Please login or create an account to proceed with payment.');
                     authModal.style.display = 'block';
-                    return;
-                }
-                
-                const plan = this.getAttribute('data-plan');
+                    return;= document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
+                } price = isYearly
+                ? document.querySelector(`.payment-btn[data-plan="${plan}"]`).getAttribute('data-yearly-price')
+                const plan = this.getAttribute('data-plan');plan="${plan}"]`).getAttribute('data-monthly-price');
                 const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
                 const price = isYearly ? this.getAttribute('data-yearly-price') : this.getAttribute('data-monthly-price');
-                
+                enerate unique reference
                 document.getElementById('selected-plan').value = plan;
                 paymentModal.style.display = 'block';
-            });
-        });
-        
-        // Handle payment form submission
+            });Create payment request
+        }); const paymentRequest = {
+                amount: price,
+        // Handle payment form submissionify ${planName}`,
         customerForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-
+                firstName,
             // Get form values
             const firstName = document.getElementById('first-name').value;
             const lastName = document.getElementById('last-name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const plan = document.getElementById('selected-plan').value;
-
-            // Get pricing info
+            try {
+            // Get pricing info with Pesapal
             const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
-            const price = isYearly
+            const price = isYearly,
                 ? document.querySelector(`.payment-btn[data-plan="${plan}"]`).getAttribute('data-yearly-price')
                 : document.querySelector(`.payment-btn[data-plan="${plan}"]`).getAttribute('data-monthly-price');
-            const planName = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
-
+            const planName = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';lConsumerSecret}`)}`,
+                    },
             // Generate unique reference
             const reference = 'DN-' + plan + '-' + Date.now();
-
+                const accessToken = tokenData.token;
             // Create payment request
             const paymentRequest = {
-                amount: price,
+                amount: price,esponse = await fetch('https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest', {
                 description: `Digital Nexify ${planName}`,
                 type: 'MERCHANT',
-                reference,
-                firstName,
+                reference,ontent-Type': 'application/json',
+                firstName,thorization: `Bearer ${accessToken}`,
                 lastName,
-                email,
+                email,dy: JSON.stringify(paymentRequest),
                 phoneNumber: phone,
-                currency: 'USD',
+                currency: 'USD',a = await paymentResponse.json();
             };
-
-            try {
-                // Authenticate with Pesapal
+                if (paymentData.redirectUrl) {
+            try {   // Redirect user to Pesapal payment page
+                // Authenticate with PesapalaymentData.redirectUrl;
                 const tokenResponse = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
-                    method: 'POST',
+                    method: 'POST',('Failed to initiate payment');
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
-                    },
+                    },'An error occurred while processing your payment. Please try again.');
                 });
                 const tokenData = await tokenResponse.json();
                 const accessToken = tokenData.token;
-
-                // Initiate payment
+        // Handle payment status
+                // Initiate paymentStatus(reference) {
                 const paymentResponse = await fetch('https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest', {
-                    method: 'POST',
-                    headers: {
+                    method: 'POST', = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
+                    headers: {OST',
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${accessToken}`,
-                    },
+                    },  Authorization: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
                     body: JSON.stringify(paymentRequest),
                 });
                 const paymentData = await paymentResponse.json();
-
+                const accessToken = tokenData.token;
                 if (paymentData.redirectUrl) {
-                    // Redirect user to Pesapal payment page
+                    // Redirect user to Pesapal payment pagepay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=${reference}`, {
                     window.location.href = paymentData.redirectUrl;
-                } else {
+                } else {ers: {
                     throw new Error('Failed to initiate payment');
-                }
+                }   },
             } catch (error) {
-                console.error('Payment Error:', error);
+                console.error('Payment Error:', error);.json();
                 alert('An error occurred while processing your payment. Please try again.');
-            }
-        });
-
-        // Handle payment status
+            }   if (statusData.paymentStatus === 'COMPLETED') {
+        });         showPaymentSuccess(reference, planName, price);
+                } else {
+        // Handle payment statusrror('Payment was not successful. Please try again.');
         async function checkPaymentStatus(reference) {
-            try {
+            try {ch (error) {
                 const tokenResponse = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
-                    method: 'POST',
+                    method: 'POST',n error occurred while checking payment status. Please try again.');
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
-                    },
-                });
+                    },yment processing (for demo)
+                });mulatePaymentProcessing(reference, planName, amount) {
                 const tokenData = await tokenResponse.json();
                 const accessToken = tokenData.token;
-
+            
                 const statusResponse = await fetch(`https://pay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=${reference}`, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
+                    method: 'GET',le.display = 'block';
+                    headers: { paymentStatusModal.querySelector('.payment-status.success');
+                        Authorization: `Bearer ${accessToken}`,.payment-status.error');
                     },
-                });
+                });Div.style.display = 'none';
                 const statusData = await statusResponse.json();
-
+            
                 if (statusData.paymentStatus === 'COMPLETED') {
                     showPaymentSuccess(reference, planName, price);
-                } else {
-                    showPaymentError('Payment was not successful. Please try again.');
-                }
-            } catch (error) {
+                } else {n class="close-modal">&times;</span>
+                    showPaymentError('Payment was not successful. Please try again.');px 20px;">
+                }       <div class="payment-status-icon">
+            } catch (error) {i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
                 console.error('Status Check Error:', error);
                 showPaymentError('An error occurred while checking payment status. Please try again.');
-            }
-        }
-
+            }           <p>Please wait while we process your payment for the ${planName}.</p>
+        }           </div>
+                </div>
         // Simulate payment processing (for demo)
         function simulatePaymentProcessing(reference, planName, amount) {
-            // Close payment modal
-            paymentModal.style.display = 'none';
-            
+            // Close payment modaltener to new close button
+            paymentModal.style.display = 'none';lose-modal').addEventListener('click', function() {
+                paymentStatusModal.style.display = 'none';
             // Show processing animation
             paymentStatusModal.style.display = 'block';
             const successDiv = paymentStatusModal.querySelector('.payment-status.success');
             const errorDiv = paymentStatusModal.querySelector('.payment-status.error');
-            
-            successDiv.style.display = 'none';
+                // For demo, we'll randomly succeed or fail
+            successDiv.style.display = 'none';) > 0.2; // 80% success rate for demo
             errorDiv.style.display = 'none';
-            
-            paymentStatusModal.innerHTML = `
+                if (isSuccess) {
+            paymentStatusModal.innerHTML = `ence, planName, amount);
                 <div class="modal-content">
-                    <span class="close-modal">&times;</span>
+                    <span class="close-modal">&times;</span>y your bank. Please check your payment details and try again.");
                     <div class="payment-status" style="text-align: center; padding: 40px 20px;">
                         <div class="payment-status-icon">
                             <i class="fas fa-spinner fa-spin" style="font-size: 3rem;"></i>
                         </div>
-                        <h3>Processing Payment...</h3>
+                        <h3>Processing Payment...</h3>e, amount) {
                         <p>Please wait while we process your payment for the ${planName}.</p>
-                    </div>
-                </div>
-            `;
-            
-            // Add close event listener to new close button
+                    </div>="modal-content">
+                </div>pan class="close-modal">&times;</span>
+            `;      <div class="payment-status success">
+                        <div class="payment-status-icon">
+            // Add close event listener to new close button</i>
             paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
                 paymentStatusModal.style.display = 'none';
-            });
-            
-            // Simulate API call delay
+            });         <p>Thank you for purchasing the ${planName}. Your reference number is <strong>${reference}</strong>.</p>
+                        <p>We've charged your account <strong>$${amount}</strong>. Your hosting account is being set up and you'll receive confirmation details shortly.</p>
+            // Simulate API call delay"btn btn-primary" id="continueToDashboard">Continue to Dashboard</button>
             setTimeout(() => {
                 // For demo, we'll randomly succeed or fail
                 const isSuccess = Math.random() > 0.2; // 80% success rate for demo
                 
-                if (isSuccess) {
-                    showPaymentSuccess(reference, planName, amount);
-                } else {
+                if (isSuccess) {rs
+                    showPaymentSuccess(reference, planName, amount);tListener('click', function() {
+                } else {tatusModal.style.display = 'none';
                     showPaymentError("Payment was declined by your bank. Please check your payment details and try again.");
                 }
-            }, 3000);
-        }
-        
+            }, 3000);getElementById('continueToDashboard').addEventListener('click', function() {
+        }       paymentStatusModal.style.display = 'none';
+                showDashboard();
         function showPaymentSuccess(reference, planName, amount) {
             paymentStatusModal.innerHTML = `
                 <div class="modal-content">
@@ -2475,154 +2494,130 @@
                     <div class="payment-status success">
                         <div class="payment-status-icon">
                             <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3>Payment Successful!</h3>
+                        </div>="payment-status error">
+                        <h3>Payment Successful!</h3>con">
                         <p>Thank you for purchasing the ${planName}. Your reference number is <strong>${reference}</strong>.</p>
                         <p>We've charged your account <strong>$${amount}</strong>. Your hosting account is being set up and you'll receive confirmation details shortly.</p>
                         <button class="btn btn-primary" id="continueToDashboard">Continue to Dashboard</button>
-                    </div>
+                    </div> id="payment-error-message">${errorMessage}</p>
+                </div>  <button class="btn btn-primary" id="tryAgainPayment">Try Again</button>
+            `;      </div>
                 </div>
-            `;
-            
             // Add event listeners
             paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
                 paymentStatusModal.style.display = 'none';
-            });
-            
+            });mentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
+                paymentStatusModal.style.display = 'none';
             document.getElementById('continueToDashboard').addEventListener('click', function() {
                 paymentStatusModal.style.display = 'none';
                 showDashboard();
-            });
-        }
-        
+            });ument.getElementById('tryAgainPayment').addEventListener('click', function() {
+        }       paymentStatusModal.style.display = 'none';
+                paymentModal.style.display = 'block';
         function showPaymentError(errorMessage) {
             paymentStatusModal.innerHTML = `
                 <div class="modal-content">
                     <span class="close-modal">&times;</span>
                     <div class="payment-status error">
-                        <div class="payment-status-icon">
+                        <div class="payment-status-icon">feature-card, .pricing-card, .testimonial-card');
                             <i class="fas fa-times-circle"></i>
-                        </div>
-                        <h3>Payment Failed</h3>
+                        </div>lement => {
+                        <h3>Payment Failed</h3>.getBoundingClientRect().top;
                         <p id="payment-error-message">${errorMessage}</p>
                         <button class="btn btn-primary" id="tryAgainPayment">Try Again</button>
-                    </div>
-                </div>
-            `;
-            
+                    </div>tPosition < screenPosition) {
+                </div>ement.style.opacity = '1';
+            `;      element.style.transform = 'translateY(0)';
+                }
             // Add event listeners
             paymentStatusModal.querySelector('.close-modal').addEventListener('click', function() {
                 paymentStatusModal.style.display = 'none';
                 window.location.href = '#'; // Return to home
-            });
-            
+            });t.querySelectorAll('.feature-card, .pricing-card, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
             document.getElementById('tryAgainPayment').addEventListener('click', function() {
                 paymentStatusModal.style.display = 'none';
                 paymentModal.style.display = 'block';
             });
-        }
-        
+        }indow.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
         // Add animation when elements come into view
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card');
-            
+            t pesapalConsumerSecret = 'PVjWH6PhjIVrz0+Zhcqtxnnp9NU=';
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.2;
-                
+                const screenPosition = window.innerHeight / 1.2;e) {
+                eventDefault();
                 if (elementPosition < screenPosition) {
                     element.style.opacity = '1';
                     element.style.transform = 'translateY(0)';
                 }
-            });
-        };
-        
+            }); // Authenticate with Pesapal
+        };      const tokenResponse = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
+                    method: 'POST',
         // Set initial state for animated elements
         document.querySelectorAll('.feature-card, .pricing-card, .testimonial-card').forEach(el => {
-            el.style.opacity = '0';
+            el.style.opacity = '0';on: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'all 0.5s ease';
-        });
-        
+        });     const tokenData = await tokenResponse.json();
+                const accessToken = tokenData.token;
         window.addEventListener('scroll', animateOnScroll);
         window.addEventListener('load', animateOnScroll);
-
-        // Pesapal API Credentials
+                const paymentResponse = await fetch('https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest', {
+        // Pesapal API Credentials,
         const pesapalConsumerKey = 'dJx8ofTbwuSs3rPH0m8s7c142c1mVZht';
         const pesapalConsumerSecret = 'PVjWH6PhjIVrz0+Zhcqtxnnp9NU=';
-
+                        Authorization: `Bearer ${accessToken}`,
         // Handle payment form submission
         customerForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-
+                const paymentData = await paymentResponse.json();
             // ...existing code...
-
-            try {
-                // Authenticate with Pesapal
+                if (paymentData.redirectUrl) {
+            try {   // Redirect user to Pesapal payment page
+                // Authenticate with PesapalaymentData.redirectUrl;
                 const tokenResponse = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
-                    method: 'POST',
+                    method: 'POST',('Failed to initiate payment');
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
-                    },
+                    },'An error occurred while processing your payment. Please try again.');
                 });
                 const tokenData = await tokenResponse.json();
                 const accessToken = tokenData.token;
-
-                // Initiate payment
+        // Handle payment status
+                // Initiate paymentStatus(reference) {
                 const paymentResponse = await fetch('https://pay.pesapal.com/v3/api/Transactions/SubmitOrderRequest', {
-                    method: 'POST',
-                    headers: {
+                    method: 'POST', = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
+                    headers: {OST',
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${accessToken}`,
-                    },
+                    },  Authorization: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
                     body: JSON.stringify(paymentRequest),
                 });
                 const paymentData = await paymentResponse.json();
-
+                const accessToken = tokenData.token;
                 if (paymentData.redirectUrl) {
-                    // Redirect user to Pesapal payment page
+                    // Redirect user to Pesapal payment pagepay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=${reference}`, {
                     window.location.href = paymentData.redirectUrl;
-                } else {
+                } else {ers: {
                     throw new Error('Failed to initiate payment');
-                }
+                }   },
             } catch (error) {
-                console.error('Payment Error:', error);
+                console.error('Payment Error:', error);.json();
                 alert('An error occurred while processing your payment. Please try again.');
-            }
-        });
-
-        // Handle payment status
+            }   if (statusData.paymentStatus === 'COMPLETED') {
+        });         showPaymentSuccess(reference, planName, price);
+                } else {
+        // Handle payment statusrror('Payment was not successful. Please try again.');
         async function checkPaymentStatus(reference) {
-            try {
+            try {ch (error) {
                 const tokenResponse = await fetch('https://pay.pesapal.com/v3/api/Auth/RequestToken', {
-                    method: 'POST',
+                    method: 'POST',n error occurred while checking payment status. Please try again.');
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Basic ${btoa(`${pesapalConsumerKey}:${pesapalConsumerSecret}`)}`,
                     },
-                });
-                const tokenData = await tokenResponse.json();
-                const accessToken = tokenData.token;
-
-                const statusResponse = await fetch(`https://pay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=${reference}`, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                });
-                const statusData = await statusResponse.json();
-
-                if (statusData.paymentStatus === 'COMPLETED') {
-                    showPaymentSuccess(reference, planName, price);
-                } else {
-                    showPaymentError('Payment was not successful. Please try again.');
-                }
-            } catch (error) {
-                console.error('Status Check Error:', error);
-                showPaymentError('An error occurred while checking payment status. Please try again.');
-            }
-        }
-    </script>
-</body>
-</html>
+                });                const tokenData = await tokenResponse.json();                const accessToken = tokenData.token;                const statusResponse = await fetch(`https://pay.pesapal.com/v3/api/Transactions/GetTransactionStatus?orderTrackingId=${reference}`, {                    method: 'GET',                    headers: {                        Authorization: `Bearer ${accessToken}`,                    },                });                const statusData = await statusResponse.json();                if (statusData.paymentStatus === 'COMPLETED') {                    showPaymentSuccess(reference, planName, price);                } else {                    showPaymentError('Payment was not successful. Please try again.');                }            } catch (error) {                console.error('Status Check Error:', error);                showPaymentError('An error occurred while checking payment status. Please try again.');            }        }    </script></body></html>
