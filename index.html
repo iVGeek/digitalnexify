@@ -1936,128 +1936,121 @@
         });
         
         // Login Form Submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
             e.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            // Simple validation
+
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            // Validate input
             if (!email || !password) {
-                alert('Please fill in all fields');
+                alert('Please fill in all fields.');
                 return;
             }
-            
-            // Check if user exists (simulated)
-            const users = JSON.parse(localStorage.getItem('users') || []);
+
+            // Retrieve users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
             const user = users.find(u => u.email === email);
-            
+
             if (!user) {
-                alert('User not registered. Please sign up first.');
-                // Switch to signup tab
-                authTabs.forEach(t => t.classList.remove('active'));
-                authTabs[1].classList.add('active');
-                
-                authForms.forEach(f => f.classList.remove('active'));
-                document.getElementById('signupForm').classList.add('active');
-                
-                // Pre-fill email
-                document.getElementById('signup-email').value = email;
+                alert('User not found. Please sign up first.');
                 return;
             }
-            
-            // Check password (in real app, this would be hashed)
+
             if (user.password !== password) {
-                alert('Incorrect password');
+                alert('Incorrect password.');
                 return;
             }
-            
-            // Check if email is verified
+
             if (!user.verified) {
-                alert('Please verify your email first. Check your inbox for the verification link.');
+                alert('Please verify your email first.');
                 showVerificationModal(email);
                 return;
             }
-            
+
             // Successful login
             loginUser(user);
         });
-        
+
         // Signup Form Submission
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
+        document.getElementById('signupForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
-            
-            // Validation
+
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const confirmPassword = document.getElementById('signup-confirm-password').value.trim();
+
+            // Validate input
             if (!name || !email || !password || !confirmPassword) {
-                alert('Please fill in all fields');
+                alert('Please fill in all fields.');
                 return;
             }
-            
+
             if (password !== confirmPassword) {
-                alert('Passwords do not match');
+                alert('Passwords do not match.');
                 return;
             }
-            
+
             if (password.length < 8) {
-                alert('Password must be at least 8 characters');
+                alert('Password must be at least 8 characters long.');
                 return;
             }
-            
+
             // Check if user already exists
-            const users = JSON.parse(localStorage.getItem('users') || []);
-            const userExists = users.some(u => u.email === email);
-            
-            if (userExists) {
-                alert('An account with this email already exists. Please login instead.');
-                // Switch to login tab
-                authTabs.forEach(t => t.classList.remove('active'));
-                authTabs[0].classList.add('active');
-                
-                authForms.forEach(f => f.classList.remove('active'));
-                document.getElementById('loginForm').classList.add('active');
-                
-                // Pre-fill email
-                document.getElementById('login-email').value = email;
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.some(u => u.email === email)) {
+                alert('An account with this email already exists. Please log in.');
                 return;
             }
-            
-            // Create new user (in real app, password would be hashed)
+
+            // Create new user
             const newUser = {
                 id: Date.now().toString(),
                 name,
                 email,
                 password,
                 verified: false,
-                createdAt: new Date().toISOString(),
-                avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`
             };
-            
+
+            // Save user locally
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
-            
+
+            // Call backend to send verification email
+            try {
+                await fetch('https://your-backend-url/sendVerificationEmail', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, token: newUser.id }),
+                });
+                alert('Verification email sent. Please check your inbox.');
+            } catch (error) {
+                console.error('Error sending verification email:', error);
+                alert('Failed to send verification email. Please try again.');
+            }
+
             // Show verification modal
             showVerificationModal(email);
-            
-            // Close auth modal
-            authModal.style.display = 'none';
         });
-        
+
         // Show verification modal
         function showVerificationModal(email) {
             verificationModal.style.display = 'block';
-            
-            // Set up resend verification
-            document.getElementById('resendVerification').addEventListener('click', function(e) {
+            document.getElementById('resendVerification').addEventListener('click', function (e) {
                 e.preventDefault();
                 alert(`Verification email resent to ${email}`);
             });
         }
-        
+
+        // Login user
+        function loginUser(user) {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('isLoggedIn', 'true');
+            authModal.style.display = 'none';
+            showDashboard();
+        }
+
         // Simulate email verification (in real app, this would be a link in the email)
         function verifyEmail(email) {
             const users = JSON.parse(localStorage.getItem('users') || []);
@@ -2081,25 +2074,6 @@
             }
             
             return false;
-        }
-        
-        // Login user
-        function loginUser(user) {
-            // Update UI to show logged in state
-            loginBtn.textContent = 'My Account';
-            loginBtn.classList.add('logged-in');
-            
-            // Close any open modals
-            authModal.style.display = 'none';
-            verificationModal.style.display = 'none';
-            welcomeModal.style.display = 'none';
-            
-            // Store user session (in a real app, use proper session management)
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('isLoggedIn', 'true');
-            
-            // Show dashboard
-            showDashboard();
         }
         
         // Show dashboard
