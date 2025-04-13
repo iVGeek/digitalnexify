@@ -6,14 +6,14 @@ define('PESAPAL_CONSUMER_KEY', 'YOUR_CONSUMER_KEY');
 define('PESAPAL_CONSUMER_SECRET', 'YOUR_CONSUMER_SECRET');
 
 // Use the correct API endpoint (sandbox or production)
-$apiEndpoint = 'https://www.pesapal.com/api/PostPesapalDirectOrderV4';
+$apiEndpoint = 'https://www.pesapal.com/v3/api/PostPesapalDirectOrderV4'; // Updated endpoint
 
 // Function to generate OAuth signature
-function generateOAuthSignature($params, $consumerSecret) {
+function generateOAuthSignature($method, $url, $params, $consumerSecret) {
     ksort($params);
-    $baseString = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
-    $signature = base64_encode(hash_hmac('sha1', $baseString, $consumerSecret, true));
-    return $signature;
+    $baseString = strtoupper($method) . '&' . rawurlencode($url) . '&' . rawurlencode(http_build_query($params, '', '&', PHP_QUERY_RFC3986));
+    $signatureKey = rawurlencode($consumerSecret) . '&';
+    return base64_encode(hash_hmac('sha1', $baseString, $signatureKey, true));
 }
 
 // Handle incoming JSON data
@@ -50,7 +50,14 @@ $oauthParams = [
 ];
 
 // Generate OAuth signature
-$oauthParams['oauth_signature'] = generateOAuthSignature($oauthParams, PESAPAL_CONSUMER_SECRET);
+$oauthParams['oauth_signature'] = generateOAuthSignature('POST', $apiEndpoint, $oauthParams, PESAPAL_CONSUMER_SECRET);
+
+// Format OAuth parameters for the Authorization header
+$oauthHeader = 'OAuth ';
+foreach ($oauthParams as $key => $value) {
+    $oauthHeader .= rawurlencode($key) . '="' . rawurlencode($value) . '", ';
+}
+$oauthHeader = rtrim($oauthHeader, ', ');
 
 // Prepare payment request payload
 $paymentDetails = [
@@ -71,7 +78,7 @@ curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($paymentDetails));
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     'Content-Type: application/json',
-    'Authorization: OAuth ' . http_build_query($oauthParams, '', ','),
+    'Authorization: ' . $oauthHeader, // Use the formatted OAuth header
 ]);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
