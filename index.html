@@ -1819,6 +1819,23 @@
     </div>
 
     <script>
+        // Initialize default user for testing
+        if (!localStorage.getItem('users')) {
+            const defaultUsers = [
+                {
+                    id: '1',
+                    username: 'super',
+                    name: 'Super User',
+                    email: 'super@example.com',
+                    password: 'xsuper1',
+                    verified: true,
+                    createdAt: new Date().toISOString(),
+                    avatar: 'https://randomuser.me/api/portraits/men/1.jpg'
+                }
+            ];
+            localStorage.setItem('users', JSON.stringify(defaultUsers));
+        }
+
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
