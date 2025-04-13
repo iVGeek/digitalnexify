@@ -444,21 +444,6 @@
             margin-bottom: 8px;
         }
         
-        /* Verification Modal */
-        .verification-modal {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .verification-modal h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-        
-        .verification-modal p {
-            margin-bottom: 20px;
-        }
-        
         /* Header Styles */
         header {
             background-color: rgba(10, 10, 10, 0.9);
@@ -1246,20 +1231,6 @@
         </div>
     </div>
 
-    <!-- Verification Modal -->
-    <div id="verificationModal" class="modal">
-        <div class="modal-content">
-            <div class="verification-modal">
-                <div class="payment-status-icon">
-                    <i class="fas fa-envelope" style="color: var(--primary-color);"></i>
-                </div>
-                <h3>Verify Your Email</h3>
-                <p>We've sent a verification link to your email address. Please click the link to verify your account.</p>
-                <p>If you didn't receive the email, check your spam folder or <a href="#" id="resendVerification">click here to resend</a>.</p>
-            </div>
-        </div>
-    </div>
-
     <!-- Welcome Modal -->
     <div id="welcomeModal" class="modal">
         <div class="modal-content">
@@ -1268,7 +1239,7 @@
                     <i class="fas fa-check-circle" style="color: var(--success-color);"></i>
                 </div>
                 <h3>Welcome to Digital Nexify!</h3>
-                <p>Thank you for registering. Your account has been successfully verified.</p>
+                <p>Thank you for registering. Your account has been successfully created.</p>
                 
                 <div class="welcome-tips">
                     <h4>Getting Started Tips:</h4>
@@ -1908,7 +1879,6 @@
         
         // Auth Modal Handling
         const authModal = document.getElementById('authModal');
-        const verificationModal = document.getElementById('verificationModal');
         const welcomeModal = document.getElementById('welcomeModal');
         const loginBtn = document.getElementById('loginBtn');
         const authTabs = document.querySelectorAll('.auth-tab');
@@ -1957,10 +1927,6 @@
             });
 
             if (user) {
-                if (!user.verified) {
-                    alert('Please verify your email before logging in.');
-                    return;
-                }
                 alert('Login successful!');
                 loginUser(user);
             } else {
@@ -2013,14 +1979,14 @@
                 return;
             }
             
-            // Create new user (in real app, password would be hashed)
+            // Create new user
             const newUser = {
                 id: Date.now().toString(),
                 username,
                 name,
                 email,
                 password,
-                verified: false,
+                verified: true, // Mark as verified by default
                 createdAt: new Date().toISOString(),
                 avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`
             };
@@ -2028,48 +1994,18 @@
             users.push(newUser);
             localStorage.setItem('users', JSON.stringify(users));
             
-            // Show verification modal
-            showVerificationModal(email);
+            // Show welcome modal
+            welcomeModal.style.display = 'block';
+            
+            // Set up welcome modal button
+            document.getElementById('startExploring').addEventListener('click', function() {
+                welcomeModal.style.display = 'none';
+                loginUser(newUser);
+            });
             
             // Close auth modal
             authModal.style.display = 'none';
         });
-        
-        // Show verification modal
-        function showVerificationModal(email) {
-            verificationModal.style.display = 'block';
-            
-            // Set up resend verification
-            document.getElementById('resendVerification').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert(`Verification email resent to ${email}`);
-            });
-        }
-        
-        // Simulate email verification (in real app, this would be a link in the email)
-        function verifyEmail(email) {
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userIndex = users.findIndex(u => u.email === email);
-            
-            if (userIndex !== -1) {
-                users[userIndex].verified = true;
-                localStorage.setItem('users', JSON.stringify(users));
-                
-                // Show welcome modal
-                verificationModal.style.display = 'none';
-                welcomeModal.style.display = 'block';
-                
-                // Set up welcome modal button
-                document.getElementById('startExploring').addEventListener('click', function() {
-                    welcomeModal.style.display = 'none';
-                    loginUser(users[userIndex]);
-                });
-                
-                return true;
-            }
-            
-            return false;
-        }
         
         // Login user
         function loginUser(user) {
@@ -2079,7 +2015,6 @@
             
             // Close any open modals
             authModal.style.display = 'none';
-            verificationModal.style.display = 'none';
             welcomeModal.style.display = 'none';
             
             // Store user session (in a real app, use proper session management)
@@ -2276,15 +2211,6 @@
                 if (window.location.hash === '#account') {
                     showDashboard();
                 }
-            }
-        }
-        
-        // Check for email verification in URL (simulated)
-        if (window.location.search.includes('verify_email=')) {
-            const email = decodeURIComponent(window.location.search.split('=')[1]);
-            if (verifyEmail(email)) {
-                // Remove the query parameter
-                window.history.replaceState({}, document.title, window.location.pathname);
             }
         }
         
