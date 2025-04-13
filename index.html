@@ -1206,8 +1206,8 @@
             <!-- Login Form -->
             <form id="loginForm" class="auth-form active">
                 <div class="form-group">
-                    <label for="login-email">Email Address</label>
-                    <input type="email" id="login-email" required>
+                    <label for="login-username-email">Username or Email</label>
+                    <input type="text" id="login-username-email" required>
                 </div>
                 <div class="form-group">
                     <label for="login-password">Password</label>
@@ -1925,25 +1925,22 @@
             e.preventDefault();
             console.log('Login form submitted'); // Debugging log
 
-            const email = document.getElementById('login-email').value;
+            const usernameOrEmail = document.getElementById('login-username-email').value;
             const password = document.getElementById('login-password').value;
 
-            fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Login response:', data); // Debugging log
-                if (data.success) {
-                    alert('Login successful!');
-                    window.location.href = '/dashboard';
-                } else {
-                    alert('Login failed: ' + data.message);
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => (u.email === usernameOrEmail || u.username === usernameOrEmail) && u.password === password);
+
+            if (user) {
+                if (!user.verified) {
+                    alert('Please verify your email before logging in.');
+                    return;
                 }
-            })
-            .catch(error => console.error('Error:', error));
+                alert('Login successful!');
+                loginUser(user);
+            } else {
+                alert('Invalid username/email or password.');
+            }
         });
 
         // AJAX-based Registration Form Submission

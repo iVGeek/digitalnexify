@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/package.json",
+  "$schema": "https://json.schemastore.org/package",
   "name": "digitalnexify",
   "version": "1.0.0",
   "description": "Digital Nexify - Premium Web Hosting Solutions",
