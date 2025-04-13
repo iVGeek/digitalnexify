@@ -3,9 +3,14 @@ const path = require('path');
 const PesaPal = require('pesapal'); // Import the PesaPal library
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const PESAPAL_BASE_URL = process.env.PESAPAL_BASE_URL || "https://cybqa.pesapal.com/pesapalv3";
+const CONSUMER_KEY = process.env.PESAPAL_CONSUMER_KEY;
+const CONSUMER_SECRET = process.env.PESAPAL_CONSUMER_SECRET;
 
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
@@ -106,6 +111,326 @@ app.get('/api/payment-callback', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch payment status' });
   }
 });
+
+// Route to register an IPN URL
+app.post('/api/register-ipn', async (req, res) => {
+  const { url, ipn_notification_type } = req.body;
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/URLSetup/RegisterIPN`,
+      { url, ipn_notification_type },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({ success: true, data: response.data });
+  } catch (error) {
+    console.error('Error registering IPN URL:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to register IPN URL' });
+  }
+});
+
+// Route to fetch the list of registered IPNs
+app.get('/api/ipn-list', async (req, res) => {
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.get(`${PESAPAL_BASE_URL}/api/URLSetup/GetIpnList`, {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    res.json({ success: true, data: response.data });
+  } catch (error) {
+    console.error('Error fetching IPN list:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to fetch IPN list' });
+  }
+});
+
+// Route to submit an order request
+app.post('/api/submit-order', async (req, res) => {
+  const {
+    id,
+    currency,
+    amount,
+    description,
+    callback_url,
+    cancellation_url,
+    notification_id,
+    billing_address,
+  } = req.body;
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/Transactions/SubmitOrderRequest`,
+      {
+        id,
+        currency,
+        amount,
+        description,
+        callback_url,
+        cancellation_url,
+        notification_id,
+        billing_address,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({
+      success: true,
+      orderTrackingId: response.data.order_tracking_id,
+      merchantReference: response.data.merchant_reference,
+      paymentUrl: response.data.redirect_url,
+    });
+  } catch (error) {
+    console.error('Error submitting order request:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to submit order request' });
+  }
+});
+
+// Route to initiate Direct Mobile Money STK payment
+app.post('/api/direct-stk', async (req, res) => {
+  const {
+    msisdn,
+    payment_method,
+    id,
+    currency,
+    amount,
+    description,
+    callback_url,
+    notification_id,
+    billing_address,
+  } = req.body;
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/Transactions/stk`,
+      {
+        msisdn,
+        payment_method,
+        id,
+        currency,
+        amount,
+        description,
+        callback_url,
+        notification_id,
+        billing_address,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({
+      success: true,
+      message: 'STK payment initiated successfully',
+      data: response.data,
+    });
+  } catch (error) {
+    console.error('Error initiating Direct Mobile Money STK payment:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to initiate STK payment' });
+  }
+});
+
+// Route to get transaction status
+app.get('/api/transaction-status', async (req, res) => {
+  const { orderTrackingId } = req.query;
+
+  if (!orderTrackingId) {
+    return res.status(400).json({ success: false, message: 'OrderTrackingId is required' });
+  }
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.get(
+      `${PESAPAL_BASE_URL}/api/Transactions/GetTransactionStatus`,
+      {
+        params: { orderTrackingId },
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({
+      success: true,
+      transactionStatus: response.data,
+    });
+  } catch (error) {
+    console.error('Error fetching transaction status:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to fetch transaction status' });
+  }
+});
+
+// Route to submit a recurring payment request
+app.post('/api/submit-recurring-order', async (req, res) => {
+  const {
+    id,
+    currency,
+    amount,
+    description,
+    callback_url,
+    cancellation_url,
+    notification_id,
+    billing_address,
+    account_number,
+    subscription_details,
+  } = req.body;
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/Transactions/SubmitOrderRequest`,
+      {
+        id,
+        currency,
+        amount,
+        description,
+        callback_url,
+        cancellation_url,
+        notification_id,
+        billing_address,
+        account_number,
+        subscription_details,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({
+      success: true,
+      orderTrackingId: response.data.order_tracking_id,
+      merchantReference: response.data.merchant_reference,
+      paymentUrl: response.data.redirect_url,
+    });
+  } catch (error) {
+    console.error('Error submitting recurring order request:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to submit recurring order request' });
+  }
+});
+
+// Route to request a refund
+app.post('/api/refund-request', async (req, res) => {
+  const { confirmation_code, amount, username, remarks } = req.body;
+
+  if (!confirmation_code || !amount || !username || !remarks) {
+    return res.status(400).json({ success: false, message: 'All fields are required' });
+  }
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/Transactions/RefundRequest`,
+      {
+        confirmation_code,
+        amount,
+        username,
+        remarks,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({
+      success: true,
+      status: response.data.status,
+      message: response.data.message,
+    });
+  } catch (error) {
+    console.error('Error processing refund request:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to process refund request' });
+  }
+});
+
+// Route to cancel an order
+app.post('/api/cancel-order', async (req, res) => {
+  const { order_tracking_id } = req.body;
+
+  if (!order_tracking_id) {
+    return res.status(400).json({ success: false, message: 'OrderTrackingId is required' });
+  }
+
+  try {
+    const token = await getPesapalAccessToken();
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/Transactions/CancelOrder`,
+      { order_tracking_id },
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    res.json({
+      success: true,
+      status: response.data.status,
+      message: response.data.message,
+    });
+  } catch (error) {
+    console.error('Error cancelling order:', error.response?.data || error.message);
+    res.status(500).json({ success: false, message: 'Failed to cancel order' });
+  }
+});
+
+async function getPesapalAccessToken() {
+  try {
+    const response = await axios.post(
+      `${PESAPAL_BASE_URL}/api/Auth/RequestToken`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        auth: {
+          username: CONSUMER_KEY,
+          password: CONSUMER_SECRET,
+        },
+      }
+    );
+    console.log("Access Token:", response.data.token);
+    return response.data.token;
+  } catch (error) {
+    console.error("Error fetching Pesapal access token:", error.response?.data || error.message);
+    throw error;
+  }
+}
+
+// Example usage
+(async () => {
+  try {
+    const token = await getPesapalAccessToken();
+    // Use the token for subsequent API calls
+  } catch (error) {
+    console.error("Failed to authenticate with Pesapal.");
+  }
+})();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
