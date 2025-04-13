@@ -2,8 +2,8 @@
 // PesaPal Initiate Payment Script
 
 // Replace with your PesaPal consumer key and secret
-define('PESAPAL_CONSUMER_KEY', 'YOUR_CONSUMER_KEY');
-define('PESAPAL_CONSUMER_SECRET', 'YOUR_CONSUMER_SECRET');
+define('PESAPAL_CONSUMER_KEY', 'dJx8ofTbwuSs3rPH0m8s7c142c1mVZht');
+define('PESAPAL_CONSUMER_SECRET', 'PVjWH6PhjIVrz0+Zhcqtxnnp9NU=');
 
 // Use the correct API endpoint (sandbox or production)
 $apiEndpoint = 'https://www.pesapal.com/v3/api/PostPesapalDirectOrderV4'; // Updated endpoint
