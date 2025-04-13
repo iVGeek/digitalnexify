@@ -2348,6 +2348,8 @@
                 if (data.success) {
                     // Redirect to PesaPal payment page
                     window.location.href = data.paymentUrl;
+                } else if (data.error && data.error.includes('oauth_parameters_absent')) {
+                    alert('Payment initiation failed: Missing OAuth parameters. Please contact support.');
                 } else {
                     alert('Payment initiation failed: ' + data.message);
                 }
