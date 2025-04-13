@@ -2263,18 +2263,39 @@
         // Payment Modal Handling
         const paymentModal = document.getElementById('paymentModal');
         const paymentBtns = document.querySelectorAll('.payment-btn');
-        
+
         paymentBtns.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const plan = this.getAttribute('data-plan');
                 const isYearly = document.querySelector('.pricing-tab.active').getAttribute('data-billing') === 'yearly';
                 const price = isYearly ? this.getAttribute('data-yearly-price') : this.getAttribute('data-monthly-price');
-                document.getElementById('selected-plan').value = plan;
-                document.getElementById('pesapal-amount').value = price;
-                paymentModal.style.display = 'block';
+
+                if (localStorage.getItem('isLoggedIn') === 'true') {
+                    // If logged in, confirm purchase
+                    const confirmPurchase = confirm(`You are about to purchase the ${plan} plan for $${price}. Proceed?`);
+                    if (confirmPurchase) {
+                        // Redirect to PesaPal payment gateway
+                        const pesapalForm = document.getElementById('pesapal-payment-form');
+                        document.getElementById('pesapal-amount').value = price;
+                        document.getElementById('pesapal-description').value = `${plan} Plan`;
+                        
+                        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                        document.getElementById('pesapal-first-name').value = currentUser.name.split(' ')[0];
+                        document.getElementById('pesapal-last-name').value = currentUser.name.split(' ')[1] || '';
+                        document.getElementById('pesapal-email').value = currentUser.email;
+                        document.getElementById('pesapal-phone').value = currentUser.phone || '';
+
+                        pesapalForm.submit();
+                    }
+                } else {
+                    // If not logged in, show payment modal
+                    document.getElementById('selected-plan').value = plan;
+                    document.getElementById('pesapal-amount').value = price;
+                    paymentModal.style.display = 'block';
+                }
             });
         });
-        
+
         // Close modal functionality
         const closeModalButtons = document.querySelectorAll('.close-modal');
         closeModalButtons.forEach(button => {
