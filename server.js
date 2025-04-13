@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const PesaPal = require('pesapal'); // Import the PesaPal library
 const bcrypt = require('bcrypt');
+const validator = require('validator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,40 @@ app.post('/admin/login', (req, res) => {
   }
 
   return res.status(401).json({ message: 'Invalid credentials' });
+});
+
+// User registration route
+app.post('/register', async (req, res) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    return res.status(400).send('All fields are required');
+  }
+  if (!validator.isEmail(email)) {
+    return res.status(400).send('Invalid email format');
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+  // Save user logic here (e.g., database interaction)
+  res.status(201).send('User registered successfully');
+});
+
+// User login route
+app.post('/login', async (req, res) => {
+  const { usernameOrEmail, password } = req.body;
+  if (!usernameOrEmail || !password) {
+    return res.status(400).send('All fields are required');
+  }
+  const user = await User.findOne({
+    $or: [{ email: usernameOrEmail }, { username: usernameOrEmail }]
+  });
+  if (!user) {
+    return res.status(404).send('User not found');
+  }
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).send('Invalid credentials');
+  }
+  // Generate token or session logic here
+  res.status(200).send('Login successful');
 });
 
 // Route to initialize payment
