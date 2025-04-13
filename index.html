@@ -1945,8 +1945,16 @@
             const usernameOrEmail = document.getElementById('login-username-email').value;
             const password = document.getElementById('login-password').value;
 
+            console.log('Input Username/Email:', usernameOrEmail); // Debugging log
+            console.log('Input Password:', password); // Debugging log
+
             const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => (u.email === usernameOrEmail || u.username === usernameOrEmail) && u.password === password);
+            console.log('Users in localStorage:', users); // Debugging log
+
+            const user = users.find(u => {
+                console.log('Checking User:', u); // Debugging log
+                return (u.email === usernameOrEmail || u.username === usernameOrEmail) && u.password === password;
+            });
 
             if (user) {
                 if (!user.verified) {
