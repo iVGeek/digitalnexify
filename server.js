@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const PesaPal = require('pesapal'); // Import the PesaPal library
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 const pesapal = new PesaPal({
   consumerKey: 'dJx8ofTbwuSs3rPH0m8s7c142c1mVZht', // Replace with your PesaPal consumer key
   consumerSecret: 'PVjWH6PhjIVrz0+Zhcqtxnnp9NU=', // Replace with your PesaPal consumer secret
+});
+
+// Hardcoded admin credentials
+const adminUsername = 'super';
+const adminPasswordHash = bcrypt.hashSync('xsuper1', 10); // Hash the password
+
+// Admin login route
+app.post('/admin/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (username === adminUsername && bcrypt.compareSync(password, adminPasswordHash)) {
+    return res.status(200).json({ message: 'Login successful' });
+  }
+
+  return res.status(401).json({ message: 'Invalid credentials' });
 });
 
 // Route to initialize payment
