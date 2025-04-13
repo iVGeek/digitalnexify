@@ -10,11 +10,28 @@
   "dependencies": {
     "express": "^4.18.2",
     "bcrypt": "^5.1.0",
-    "validator": "^13.9.0"
+    "validator": "^13.9.0",
+    "axios": "^1.4.0"
   },
   "engines": {
     "node": ">=14.0.0"
   },
   "author": "iVGeek",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/digitalnexify.git"
+  },
+  "homepage": "https://github.com/yourusername/digitalnexify#readme",
+  "keywords": [
+    "web hosting",
+    "premium hosting",
+    "digital nexify"
+  ],
+  "bugs": {
+    "url": "https://github.com/yourusername/digitalnexify/issues"
+  },
+  "config": {
+    "pesapalApiBaseUrl": "https://www.pesapal.com/api"
+  }
 }
