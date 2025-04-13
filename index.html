@@ -1470,7 +1470,7 @@
     </div>
 
     <!-- PesaPal Payment Form (hidden) -->
-    <form id="pesapal-payment-form" method="post" action="/api/initiate-payment" style="display: none;">
+    <form id="pesapal-payment-form" method="post" action="https://www.pesapal.com/api/PostPesapalDirectOrderV4" style="display: none;">
         <input type="hidden" name="Amount" id="pesapal-amount">
         <input type="hidden" name="Description" id="pesapal-description">
         <input type="hidden" name="FirstName" id="pesapal-first-name">
@@ -1951,49 +1951,315 @@
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
-
-            // Use a CORS proxy to bypass the CORS issue
-            const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-            const apiUrl = 'https://ivgeek.github.io/api/register';
-
-            fetch(corsProxy + apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password, confirmPassword })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Server returned an error:', response.status, response.statusText);
-                    return response.text(); // Read the response as text for debugging
-                }
-                return response.json(); // Parse JSON if the response is OK
-            })
-            .then(data => {
-                if (typeof data === 'string') {
-                    console.error('Non-JSON response received:', data); // Log non-JSON response
-                    alert('An error occurred. Please try again later.');
-                    return;
-                }
-                console.log('Signup response:', data); // Debugging log
-                if (data.success) {
-                    alert('Registration successful! Please verify your email.');
-                    authModal.style.display = 'none';
-                    verificationModal.style.display = 'block';
-                } else {
-                    alert('Registration failed: ' + data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
+            
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
+            
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userExists = users.some(u => u.email === email);
+            
+            if (userExists) {
+                alert('An account with this email already exists. Please login instead.');
+                // Switch to login tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                authTabs[0].classList.add('active');
+                
+                authForms.forEach(f => f.classList.remove('active'));
+                document.getElementById('loginForm').classList.add('active');
+                
+                // Pre-fill email
+                document.getElementById('login-email').value = email;
+                return;
+            }
+            
+            // Create new user (in real app, password would be hashed)
+            const newUser = {
+                id: Date.now().toString(),
+                name,
+                email,
+                password,
+                verified: false,
+                createdAt: new Date().toISOString(),
+                avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 100)}.jpg`
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Show verification modal
+            showVerificationModal(email);
+            
+            // Close auth modal
+            authModal.style.display = 'none';
         });
-
-        // Close modal when clicking outside of it
-        window.addEventListener('click', function (e) {
-            if (e.target === authModal) {
-                console.log('Closing auth modal'); // Debugging log
-                authModal.style.display = 'none';
+        
+        // Show verification modal
+        function showVerificationModal(email) {
+            verificationModal.style.display = 'block';
+            
+            // Set up resend verification
+            document.getElementById('resendVerification').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert(`Verification email resent to ${email}`);
+            });
+        }
+        
+        // Simulate email verification (in real app, this would be a link in the email)
+        function verifyEmail(email) {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.email === email);
+            
+            if (userIndex !== -1) {
+                users[userIndex].verified = true;
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Show welcome modal
+                verificationModal.style.display = 'none';
+                welcomeModal.style.display = 'block';
+                
+                // Set up welcome modal button
+                document.getElementById('startExploring').addEventListener('click', function() {
+                    welcomeModal.style.display = 'none';
+                    loginUser(users[userIndex]);
+                });
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Login user
+        function loginUser(user) {
+            // Update UI to show logged in state
+            loginBtn.textContent = 'My Account';
+            loginBtn.classList.add('logged-in');
+            
+            // Close any open modals
+            authModal.style.display = 'none';
+            verificationModal.style.display = 'none';
+            welcomeModal.style.display = 'none';
+            
+            // Store user session (in a real app, use proper session management)
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // Show dashboard
+            showDashboard();
+        }
+        
+        // Show dashboard
+        function showDashboard() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('accountDashboard').style.display = 'block';
+            
+            // Load user data
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                document.getElementById('userFullName').textContent = user.name;
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('userAvatar').src = user.avatar;
+                document.getElementById('profile-name').value = user.name;
+                document.getElementById('profile-email').value = user.email;
+            }
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Dashboard navigation
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active menu item
+                document.querySelectorAll('.sidebar-menu a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const section = this.getAttribute('data-section');
+                document.querySelectorAll('.dashboard-section').forEach(sec => {
+                    sec.style.display = 'none';
+                });
+                document.getElementById(`${section}Section`).style.display = 'block';
+            });
+        });
+        
+        // Profile form submission
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('profile-name').value;
+            const email = document.getElementById('profile-email').value;
+            const phone = document.getElementById('profile-phone').value;
+            
+            // Update user data
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                user.name = name;
+                user.email = email;
+                
+                // Update in users array
+                const users = JSON.parse(localStorage.getItem('users') || []);
+                const userIndex = users.findIndex(u => u.id === user.id);
+                if (userIndex !== -1) {
+                    users[userIndex] = user;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // Update UI
+                document.getElementById('userFullName').textContent = name;
+                document.getElementById('userEmail').textContent = email;
+                
+                alert('Profile updated successfully');
             }
         });
-
+        
+        // Avatar upload
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('userAvatar').src = event.target.result;
+                    
+                    // Update user data
+                    const user = JSON.parse(localStorage.getItem('currentUser'));
+                    if (user) {
+                        user.avatar = event.target.result;
+                        
+                        // Update in users array
+                        const users = JSON.parse(localStorage.getItem('users') || []);
+                        const userIndex = users.findIndex(u => u.id === user.id);
+                        if (userIndex !== -1) {
+                            users[userIndex] = user;
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                        
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Password form submission
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            
+            // Validation
+            if (newPassword !== confirmNewPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters');
+                return;
+            }
+            
+            // Check current password (in real app, this would be hashed)
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user.password !== currentPassword) {
+                alert('Current password is incorrect');
+                return;
+            }
+            
+            // Update password
+            user.password = newPassword;
+            
+            // Update in users array
+            const users = JSON.parse(localStorage.getItem('users') || []);
+            const userIndex = users.findIndex(u => u.id === user.id);
+            if (userIndex !== -1) {
+                users[userIndex] = user;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            
+            alert('Password updated successfully');
+            document.getElementById('passwordForm').reset();
+        });
+        
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Clear session
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            
+            // Update UI
+            loginBtn.textContent = 'Login';
+            loginBtn.classList.remove('logged-in');
+            
+            // Show main content
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('accountDashboard').style.display = 'none';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        });
+        
+        // Forgot Password
+        document.getElementById('forgotPassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            
+            if (!email) {
+                alert('Please enter your email address first');
+                return;
+            }
+            
+            alert(`Password reset link will be sent to ${email} if an account exists.`);
+        });
+        
+        // Check if user is already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user) {
+                loginBtn.textContent = 'My Account';
+                loginBtn.classList.add('logged-in');
+                
+                // Check if we're on the dashboard
+                if (window.location.hash === '#account') {
+                    showDashboard();
+                }
+            }
+        }
+        
+        // Check for email verification in URL (simulated)
+        if (window.location.search.includes('verify_email=')) {
+            const email = decodeURIComponent(window.location.search.split('=')[1]);
+            if (verifyEmail(email)) {
+                // Remove the query parameter
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+        
         // Payment Modal Handling
         const paymentModal = document.getElementById('paymentModal');
         const paymentBtns = document.querySelectorAll('.payment-btn');
