@@ -1877,6 +1877,52 @@
             });
         });
         
+        // Add event listeners to navigation links for scrolling and toggling visibility
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Hide dashboard and show main content
+                    document.getElementById('accountDashboard').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+
+                    // Scroll to the target section
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Adjust for fixed header
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add event listeners to sidebar links for navigation
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Hide dashboard and show main content
+                        document.getElementById('accountDashboard').style.display = 'none';
+                        document.getElementById('mainContent').style.display = 'block';
+
+                        // Scroll to the target section
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for fixed header
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
         // Auth Modal Handling
         const authModal = document.getElementById('authModal');
         const welcomeModal = document.getElementById('welcomeModal');
