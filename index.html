@@ -1222,6 +1222,10 @@
             <!-- Signup Form -->
             <form id="signupForm" class="auth-form">
                 <div class="form-group">
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" required>
+                </div>
+                <div class="form-group">
                     <label for="signup-name">Full Name</label>
                     <input type="text" id="signup-name" required>
                 </div>
@@ -1947,13 +1951,14 @@
             e.preventDefault();
             console.log('Signup form submitted'); // Debugging log
 
+            const username = document.getElementById('signup-username').value;
             const name = document.getElementById('signup-name').value;
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('signup-confirm-password').value;
             
             // Validation
-            if (!name || !email || !password || !confirmPassword) {
+            if (!username || !name || !email || !password || !confirmPassword) {
                 alert('Please fill in all fields');
                 return;
             }
@@ -1970,10 +1975,10 @@
             
             // Check if user already exists
             const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userExists = users.some(u => u.email === email);
+            const userExists = users.some(u => u.email === email || u.username === username);
             
             if (userExists) {
-                alert('An account with this email already exists. Please login instead.');
+                alert('An account with this email or username already exists. Please login instead.');
                 // Switch to login tab
                 authTabs.forEach(t => t.classList.remove('active'));
                 authTabs[0].classList.add('active');
@@ -1989,6 +1994,7 @@
             // Create new user (in real app, password would be hashed)
             const newUser = {
                 id: Date.now().toString(),
+                username,
                 name,
                 email,
                 password,
