@@ -1,9 +1,16 @@
 <?php
 // PesaPal Initiate Payment Script
 
-// Replace with your PesaPal consumer key and secret
-define('PESAPAL_CONSUMER_KEY', 'dJx8ofTbwuSs3rPH0m8s7c142c1mVZht');
-define('PESAPAL_CONSUMER_SECRET', 'PVjWH6PhjIVrz0+Zhcqtxnnp9NU=');
+// Replace hardcoded credentials with environment variables
+define('PESAPAL_CONSUMER_KEY', getenv('PESAPAL_CONSUMER_KEY'));
+define('PESAPAL_CONSUMER_SECRET', getenv('PESAPAL_CONSUMER_SECRET'));
+
+if (!PESAPAL_CONSUMER_KEY || !PESAPAL_CONSUMER_SECRET) {
+    error_log('PesaPal credentials are not set in environment variables.');
+    http_response_code(500);
+    echo json_encode(['success' => false, 'message' => 'Server configuration error']);
+    exit;
+}
 
 // Use the correct API endpoint (sandbox or production)
 $apiEndpoint = 'https://www.pesapal.com/v3/api/PostPesapalDirectOrderV4'; // Updated endpoint
@@ -33,12 +40,27 @@ $phone = $data['phone'] ?? '';
 $plan = $data['plan'] ?? '';
 $amount = $data['amount'] ?? '';
 
-// Validate required fields
+// Validate required fields with stricter checks
 if (!$firstName || !$email || !$phone || !$plan || !$amount) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Missing required fields']);
     exit;
 }
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid email format']);
+    exit;
+}
+
+if (!is_numeric($amount) || $amount <= 0) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Invalid amount']);
+    exit;
+}
+
+// Log the payment request for debugging
+error_log('Initiating payment for: ' . json_encode($data));
 
 // Prepare OAuth parameters
 $oauthParams = [
@@ -84,12 +106,23 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 $response = curl_exec($ch);
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    error_log('cURL error: ' . curl_error($ch));
+}
+
 curl_close($ch);
 
 if ($httpCode === 200) {
     $responseData = json_decode($response, true);
-    echo json_encode(['success' => true, 'paymentUrl' => $responseData['redirect_url'] ?? '']);
+    if (isset($responseData['redirect_url'])) {
+        echo json_encode(['success' => true, 'paymentUrl' => $responseData['redirect_url']]);
+    } else {
+        error_log('Missing redirect_url in PesaPal response: ' . $response);
+        echo json_encode(['success' => false, 'message' => 'Unexpected response from payment gateway']);
+    }
 } else {
+    error_log('Failed to initiate payment. HTTP Code: ' . $httpCode . '. Response: ' . $response);
     echo json_encode(['success' => false, 'message' => 'Failed to initiate payment']);
 }
 ?>
