@@ -39,9 +39,21 @@ function pesapal_link($params) {
     $oauthSignatureMethod = "HMAC-SHA1";
 
     // Generate OAuth signature
-    $signatureBaseString = "POST&" . urlencode("https://www.pesapal.com/API/PostPesapalDirectOrderV4") . "&" . urlencode("callback_url=" . $callbackUrl . "&consumer_key=" . $consumerKey . "&nonce=" . $oauthNonce . "&signature_method=" . $oauthSignatureMethod . "&timestamp=" . $oauthTimestamp);
+    $parameters = [
+        'oauth_callback' => $callbackUrl,
+        'oauth_consumer_key' => $consumerKey,
+        'oauth_nonce' => $oauthNonce,
+        'oauth_signature_method' => $oauthSignatureMethod,
+        'oauth_timestamp' => $oauthTimestamp,
+    ];
+    ksort($parameters); // Sort parameters alphabetically
+    $parameterString = http_build_query($parameters, '', '&', PHP_QUERY_RFC3986);
+    $signatureBaseString = "POST&" . urlencode("https://www.pesapal.com/API/PostPesapalDirectOrderV4") . "&" . urlencode($parameterString);
     $signatureKey = urlencode($consumerSecret) . "&";
     $oauthSignature = base64_encode(hash_hmac("sha1", $signatureBaseString, $signatureKey, true));
+
+    // Add OAuth signature to parameters
+    $parameters['oauth_signature'] = $oauthSignature;
 
     $htmlOutput = '<form action="https://www.pesapal.com/API/PostPesapalDirectOrderV4" method="post">';
     $htmlOutput .= '<input type="hidden" name="amount" value="' . $params['amount'] . '">';
@@ -49,11 +61,9 @@ function pesapal_link($params) {
     $htmlOutput .= '<input type="hidden" name="type" value="MERCHANT">';
     $htmlOutput .= '<input type="hidden" name="reference" value="' . $params['invoiceid'] . '">';
     $htmlOutput .= '<input type="hidden" name="callback_url" value="' . $callbackUrl . '">';
-    $htmlOutput .= '<input type="hidden" name="oauth_consumer_key" value="' . $consumerKey . '">';
-    $htmlOutput .= '<input type="hidden" name="oauth_signature_method" value="' . $oauthSignatureMethod . '">';
-    $htmlOutput .= '<input type="hidden" name="oauth_signature" value="' . $oauthSignature . '">';
-    $htmlOutput .= '<input type="hidden" name="oauth_timestamp" value="' . $oauthTimestamp . '">';
-    $htmlOutput .= '<input type="hidden" name="oauth_nonce" value="' . $oauthNonce . '">';
+    foreach ($parameters as $key => $value) {
+        $htmlOutput .= '<input type="hidden" name="' . $key . '" value="' . htmlspecialchars($value) . '">';
+    }
     $htmlOutput .= '<button type="submit">Pay Now</button>';
     $htmlOutput .= '</form>';
     return $htmlOutput;
