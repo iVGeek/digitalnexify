@@ -11,11 +11,17 @@ if (!$gatewayParams['type']) {
     die("Module Not Activated");
 }
 
-// ...process callback logic...
 $invoiceId = $_GET['invoiceId'];
 $transactionId = $_GET['pesapal_transaction_tracking_id'];
 $paymentStatus = $_GET['pesapal_notification_type'];
 
-// ...update invoice based on $paymentStatus...
-logTransaction($gatewayModule, $_GET, "Callback Received");
+$invoiceId = checkCbInvoiceID($invoiceId, $gatewayModule);
+checkCbTransID($transactionId);
+
+if ($paymentStatus == "COMPLETED") {
+    addInvoicePayment($invoiceId, $transactionId, null, null, $gatewayModule);
+    logTransaction($gatewayModule, $_GET, "Successful");
+} else {
+    logTransaction($gatewayModule, $_GET, "Unsuccessful");
+}
 ?>
