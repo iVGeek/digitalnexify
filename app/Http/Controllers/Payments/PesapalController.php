@@ -60,8 +60,8 @@ class PesapalController extends Controller
             'currency' => 'KES',
             'amount' => $request->amount,
             'description' => $request->description,
-            'callback_url' => config('pesapal.callback_url'),
-            'notification_id' => config('pesapal.ipn_url'),
+            'callback_url' => 'https://digitalnexifyk.com/payment/callback', // Updated with your domain
+            'notification_id' => 'https://digitalnexifyk.com/api/payments/ipn', // Updated with your domain
             'billing_address' => [
                 'email_address' => $request->email,
                 'phone_number' => $request->phone,
