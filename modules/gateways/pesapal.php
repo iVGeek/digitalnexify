@@ -55,15 +55,20 @@ function pesapal_link($params) {
     // Add OAuth signature to parameters
     $parameters['oauth_signature'] = $oauthSignature;
 
+    // Build Authorization header
+    $authorizationHeader = 'OAuth ';
+    foreach ($parameters as $key => $value) {
+        $authorizationHeader .= $key . '="' . rawurlencode($value) . '", ';
+    }
+    $authorizationHeader = rtrim($authorizationHeader, ', ');
+
     $htmlOutput = '<form action="https://www.pesapal.com/API/PostPesapalDirectOrderV4" method="post">';
     $htmlOutput .= '<input type="hidden" name="amount" value="' . $params['amount'] . '">';
     $htmlOutput .= '<input type="hidden" name="description" value="' . $params['description'] . '">';
     $htmlOutput .= '<input type="hidden" name="type" value="MERCHANT">';
     $htmlOutput .= '<input type="hidden" name="reference" value="' . $params['invoiceid'] . '">';
     $htmlOutput .= '<input type="hidden" name="callback_url" value="' . $callbackUrl . '">';
-    foreach ($parameters as $key => $value) {
-        $htmlOutput .= '<input type="hidden" name="' . $key . '" value="' . htmlspecialchars($value) . '">';
-    }
+    $htmlOutput .= '<input type="hidden" name="authorization_header" value="' . htmlspecialchars($authorizationHeader) . '">';
     $htmlOutput .= '<button type="submit">Pay Now</button>';
     $htmlOutput .= '</form>';
     return $htmlOutput;
