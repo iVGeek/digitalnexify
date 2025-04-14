@@ -46,28 +46,48 @@ class PesapalService
 
     protected function generateHeaders()
     {
+        $oauthParams = [
+            'oauth_consumer_key' => $this->consumerKey,
+            'oauth_nonce' => bin2hex(random_bytes(8)), // Generate a unique nonce
+            'oauth_signature_method' => 'HMAC-SHA1',
+            'oauth_timestamp' => time(), // Current timestamp
+            'oauth_version' => '1.0',
+        ];
+
+        // Generate the OAuth signature
+        $oauthParams['oauth_signature'] = $this->generateSignature($oauthParams);
+
+        // Build the Authorization header
+        $authorizationHeader = 'OAuth ';
+        foreach ($oauthParams as $key => $value) {
+            $authorizationHeader .= $key . '="' . rawurlencode($value) . '", ';
+        }
+        $authorizationHeader = rtrim($authorizationHeader, ', ');
+
         return [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $this->generateToken(),
+            'Authorization' => $authorizationHeader,
         ];
     }
 
-    protected function generateToken()
+    protected function generateSignature(array $params)
     {
-        $endpoint = '/api/Auth/RequestToken';
-        $credentials = [
-            'consumer_key' => $this->consumerKey,
-            'consumer_secret' => $this->consumerSecret,
-        ];
+        // Sort parameters alphabetically
+        ksort($params);
 
-        $response = Http::post($this->baseUrl . $endpoint, $credentials);
-
-        if ($response->successful()) {
-            return $response->json()['token'];
+        // URL-encode each key/value pair
+        $encodedParams = [];
+        foreach ($params as $key => $value) {
+            $encodedParams[] = rawurlencode($key) . '=' . rawurlencode($value);
         }
 
-        throw new \Exception('Failed to generate Pesapal token');
+        // Construct the base string
+        $baseString = 'POST&' . rawurlencode($this->baseUrl . '/api/Transactions/SubmitOrderRequest') . '&' . rawurlencode(implode('&', $encodedParams));
+
+        // Generate the signature using HMAC-SHA1
+        $signingKey = rawurlencode($this->consumerSecret) . '&';
+        return base64_encode(hash_hmac('sha1', $baseString, $signingKey, true));
     }
 
     protected function handleResponse($response)
