@@ -1,0 +1,29 @@
+/* Global Styles */
+:root {
+    --primary-color: #00a8ff;
+    --secondary-color: #0077b6;
+    --accent-color: #48cae4;
+    --dark-bg: #121212;
+    --darker-bg: #0a0a0a;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --text-muted: #b0b0b0;
+    --success-color: #00e676;
+    --error-color: #ff4444;
+    --warning-color: #ffbb33;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--dark-bg);
+    line-height: 1.6;
+}
+
+/* ...existing CSS code... */
