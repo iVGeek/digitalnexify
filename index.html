@@ -170,6 +170,7 @@
                             <li><a href="#" class="active" data-section="profile"><i class="fas fa-user"></i> Profile</a></li>
                             <li><a href="#" data-section="subscription"><i class="fas fa-server"></i> Subscription</a></li>
                             <li><a href="#" data-section="security"><i class="fas fa-shield-alt"></i> Security</a></li>
+                            <li><a href="#" data-section="users"><i class="fas fa-users"></i> View Users</a></li>
                             <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                         </ul>
                     </div>
@@ -289,6 +290,27 @@
                                 <button class="btn btn-outline">Update Recovery Email</button>
                             </div>
                         </div>
+
+                        <!-- Users Section -->
+                        <div id="usersSection" class="dashboard-section" style="display: none;">
+                            <div class="form-section">
+                                <h4>Registered Users</h4>
+                                <table class="users-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Full Name</th>
+                                            <th>Created At</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <!-- Users will be dynamically loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -318,217 +340,195 @@
                     <a href="#features" class="btn btn-outline">Learn More</a>
                 </div>
                 <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hosting Dashboard">
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features" id="features">
-            <div class="container features-content">
-                <h2 class="section-title">Why Choose Digital Nexify?</h2>
-                <p class="section-subtitle">We provide everything you need to get your website up and running with maximum performance and security.</p>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3>Lightning Fast</h3>
-                        <p>Our SSD-powered servers and optimized stack ensure your website loads in milliseconds, improving user experience and SEO.</p>
-                    </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-shield-alt"></i>to-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Hosting Dashboard">
                         </div>
                         <h3>Rock Solid Security</h3>
                         <p>Free SSL certificates, DDoS protection, and daily backups keep your website safe from threats and data loss.</p>
                     </div>
-                    
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
+                    s Section -->
+                    <div class="feature-card">">
+                        <div class="feature-icon">">
+                            <i class="fas fa-headset"></i>al Nexify?</h2>
+                        </div>ion-subtitle">We provide everything you need to get your website up and running with maximum performance and security.</p>
                         <h3>24/7 Expert Support</h3>
                         <p>Our hosting experts are available round the clock via live chat, email, and phone to assist you with any issues.</p>
-                    </div>
-                    
-                    <div class="feature-card">
+                    </div>lass="feature-card">
+                        <div class="feature-icon">
+                    <div class="feature-card">olt"></i>
                         <div class="feature-icon">
                             <i class="fas fa-server"></i>
-                        </div>
+                        </div> SSD-powered servers and optimized stack ensure your website loads in milliseconds, improving user experience and SEO.</p>
                         <h3>99.9% Uptime</h3>
                         <p>Our redundant infrastructure and network ensure your website stays online when your customers need it most.</p>
-                    </div>
-                    
-                    <div class="feature-card">
+                    </div>lass="feature-card">
+                        <div class="feature-icon">
+                    <div class="feature-card">hield-alt"></i>
                         <div class="feature-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
-                        </div>
+                        </div>e SSL certificates, DDoS protection, and daily backups keep your website safe from threats and data loss.</p>
                         <h3>Easy Migration</h3>
                         <p>We offer free website migration services to move your existing site to our platform with zero downtime.</p>
-                    </div>
-                    
-                    <div class="feature-card">
+                    </div>lass="feature-card">
+                        <div class="feature-icon">
+                    <div class="feature-card">eadset"></i>
                         <div class="feature-icon">
                             <i class="fas fa-tachometer-alt"></i>
-                        </div>
+                        </div> hosting experts are available round the clock via live chat, email, and phone to assist you with any issues.</p>
                         <h3>Simple Control Panel</h3>
                         <p>Our custom control panel makes managing your hosting, domains, and emails intuitive even for beginners.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pricing Section -->
+                    </div>lass="feature-card">
+                </div>  <div class="feature-icon">
+            </div>          <i class="fas fa-server"></i>
+        </section>      </div>
+                        <h3>99.9% Uptime</h3>
+        <!-- Pricing Section -->edundant infrastructure and network ensure your website stays online when your customers need it most.</p>
         <section class="pricing" id="pricing">
             <div class="container pricing-content">
                 <h2 class="section-title">Simple, Transparent Pricing</h2>
                 <p class="section-subtitle">Choose the perfect plan for your website. All plans come with our 30-day money-back guarantee.</p>
-                
+                            <i class="fas fa-cloud-upload-alt"></i>
                 <div class="pricing-tabs">
                     <button class="pricing-tab active" data-billing="monthly">Monthly</button>
-                    <button class="pricing-tab" data-billing="yearly">Yearly (Save 20%)</button>
-                </div>
-                
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <h3>Starter</h3>
+                    <button class="pricing-tab" data-billing="yearly">Yearly (Save 20%)</button>o our platform with zero downtime.</p>
+                </div>div>
+                    
+                <div class="pricing-grid">rd">
+                    <div class="pricing-card">on">
+                        <h3>Starter</h3>s fa-tachometer-alt"></i>
                         <div class="price monthly-price">$4.99<span>/mo</span></div>
                         <div class="price yearly-price" style="display: none;">$3.99<span>/mo</span></div>
-                        <ul class="pricing-features">
+                        <ul class="pricing-features">akes managing your hosting, domains, and emails intuitive even for beginners.</p>
                             <li><i class="fas fa-check"></i> 1 Website</li>
                             <li><i class="fas fa-check"></i> 10GB SSD Storage</li>
                             <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
                             <li><i class="fas fa-check"></i> Free SSL Certificate</li>
                             <li><i class="fas fa-check"></i> 5 Email Accounts</li>
                             <li><i class="fas fa-check"></i> 24/7 Support</li>
-                        </ul>
+                        </ul>ng" id="pricing">
                         <button class="btn btn-primary payment-btn" data-plan="starter" data-monthly-price="4.99" data-yearly-price="3.99">Get Started</button>
-                    </div>
-                    
+                    </div>"section-title">Simple, Transparent Pricing</h2>
+                    lass="section-subtitle">Choose the perfect plan for your website. All plans come with our 30-day money-back guarantee.</p>
                     <div class="pricing-card popular">
                         <div class="popular-badge">Most Popular</div>
-                        <h3>Business</h3>
-                        <div class="price monthly-price">$9.99<span>/mo</span></div>
+                        <h3>Business</h3>g-tab active" data-billing="monthly">Monthly</button>
+                        <div class="price monthly-price">$9.99<span>/mo</span></div>0%)</button>
                         <div class="price yearly-price" style="display: none;">$7.99<span>/mo</span></div>
                         <ul class="pricing-features">
                             <li><i class="fas fa-check"></i> Unlimited Websites</li>
                             <li><i class="fas fa-check"></i> 50GB SSD Storage</li>
                             <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
                             <li><i class="fas fa-check"></i> Free SSL Certificate</li>
-                            <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>
+                            <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>/mo</span></div>
                             <li><i class="fas fa-check"></i> Free Domain (1st year)</li>
                             <li><i class="fas fa-check"></i> Daily Backups</li>
                             <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
-                        </ul>
+                        </ul>li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
                         <button class="btn btn-primary payment-btn" data-plan="business" data-monthly-price="9.99" data-yearly-price="7.99">Get Started</button>
-                    </div>
-                    
+                    </div>  <li><i class="fas fa-check"></i> 5 Email Accounts</li>
+                            <li><i class="fas fa-check"></i> 24/7 Support</li>
                     <div class="pricing-card">
-                        <h3>Enterprise</h3>
+                        <h3>Enterprise</h3>btn-primary payment-btn" data-plan="starter" data-monthly-price="4.99" data-yearly-price="3.99">Get Started</button>
                         <div class="price monthly-price">$19.99<span>/mo</span></div>
                         <div class="price yearly-price" style="display: none;">$15.99<span>/mo</span></div>
-                        <ul class="pricing-features">
+                        <ul class="pricing-features">>
                             <li><i class="fas fa-check"></i> Unlimited Websites</li>
                             <li><i class="fas fa-check"></i> 100GB SSD Storage</li>
                             <li><i class="fas fa-check"></i> Unlimited Bandwidth</li>
-                            <li><i class="fas fa-check"></i> Free SSL Certificate</li>
+                            <li><i class="fas fa-check"></i> Free SSL Certificate</li>pan>/mo</span></div>
                             <li><i class="fas fa-check"></i> Unlimited Email Accounts</li>
                             <li><i class="fas fa-check"></i> Free Domain (1st year)</li>
-                            <li><i class="fas fa-check"></i> Daily Backups</li>
-                            <li><i class="fas fa-check"></i> Free CDN</li>
-                            <li><i class="fas fa-check"></i> Dedicated Resources</li>
-                            <li><i class="fas fa-check"></i> 24/7 VIP Support</li>
-                        </ul>
+                            <li><i class="fas fa-check"></i> Daily Backups</li>li>
+                            <li><i class="fas fa-check"></i> Free CDN</li>dwidth</li>
+                            <li><i class="fas fa-check"></i> Dedicated Resources</li>>
+                            <li><i class="fas fa-check"></i> 24/7 VIP Support</li>nts</li>
+                        </ul>li><i class="fas fa-check"></i> Free Domain (1st year)</li>
                         <button class="btn btn-primary payment-btn" data-plan="enterprise" data-monthly-price="19.99" data-yearly-price="15.99">Get Started</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
+                    </div>  <li><i class="fas fa-check"></i> 24/7 Priority Support</li>
+                </div>  </ul>
+            </div>      <button class="btn btn-primary payment-btn" data-plan="business" data-monthly-price="9.99" data-yearly-price="7.99">Get Started</button>
+        </section>  </div>
+                    
+        <!-- Testimonials Section -->ng-card">
         <section class="testimonials" id="testimonials">
-            <div class="container testimonials-content">
-                <h2 class="section-title">What Our Customers Say</h2>
+            <div class="container testimonials-content">>$19.99<span>/mo</span></div>
+                <h2 class="section-title">What Our Customers Say</h2>y: none;">$15.99<span>/mo</span></div>
                 <p class="section-subtitle">Don't just take our word for it. Here's what our customers have to say about our hosting services.</p>
-                
-                <div class="testimonials-grid">
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
+                            <li><i class="fas fa-check"></i> Unlimited Websites</li>
+                <div class="testimonials-grid">a-check"></i> 100GB SSD Storage</li>
+                    <div class="testimonial-card">heck"></i> Unlimited Bandwidth</li>
+                        <div class="testimonial-header"></i> Free SSL Certificate</li>
                             <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="testimonial-avatar">
-                            <div class="testimonial-author">
-                                <h4>Sarah Johnson</h4>
-                                <p>Small Business Owner</p>
-                            </div>
-                        </div>
+                            <div class="testimonial-author"> Free Domain (1st year)</li>
+                                <h4>Sarah Johnson</h4>"></i> Daily Backups</li>
+                                <p>Small Business Owner</p>> Free CDN</li>
+                            </div> class="fas fa-check"></i> Dedicated Resources</li>
+                        </div>i><i class="fas fa-check"></i> 24/7 VIP Support</li>
                         <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>payment-btn" data-plan="enterprise" data-monthly-price="19.99" data-yearly-price="15.99">Get Started</button>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
                         <p>"I switched to Digital Nexify six months ago and my website has never been faster. Their support team helped me migrate my site and it was completely painless. Highly recommended!"</p>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
+                    </div>stimonials" id="testimonials">
+                    ss="container testimonials-content">
+                    <div class="testimonial-card"> Customers Say</h2>
+                        <div class="testimonial-header">ake our word for it. Here's what our customers have to say about our hosting services.</p>
                             <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="testimonial-avatar">
                             <div class="testimonial-author">
                                 <h4>Michael Chen</h4>
-                                <p>Web Developer</p>
-                            </div>
-                        </div>
+                                <p>Web Developer</p>er">
+                            </div>rc="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="testimonial-avatar">
+                        </div>iv class="testimonial-author">
                         <div class="testimonial-rating">
+                            <i class="fas fa-star"></i></p>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>>
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
+                        </div> class="fas fa-star"></i>
                         <p>"As a developer, I appreciate the performance and flexibility of Digital Nexify's servers. The one-click staging environments are a game-changer for my workflow."</p>
-                    </div>
-                    
+                    </div>  <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                     <div class="testimonial-card">
-                        <div class="testimonial-header">
+                        <div class="testimonial-header"> six months ago and my website has never been faster. Their support team helped me migrate my site and it was completely painless. Highly recommended!"</p>
                             <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily Rodriguez" class="testimonial-avatar">
                             <div class="testimonial-author">
                                 <h4>Emily Rodriguez</h4>
-                                <p>Blogger</p>
-                            </div>
-                        </div>
+                                <p>Blogger</p>l-header">
+                            </div>rc="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="testimonial-avatar">
+                        </div>iv class="testimonial-author">
                         <div class="testimonial-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>>
                             <i class="fas fa-star-half-alt"></i>
-                        </div>
+                        </div> class="fas fa-star"></i>
                         <p>"My blog traffic has grown significantly since moving to Digital Nexify. The uptime is excellent and whenever I've needed help, their support team responds within minutes."</p>
+                    </div>  <i class="fas fa-star"></i>
+                </div>      <i class="fas fa-star"></i>
+            </div>      </div>
+        </section>      <p>"As a developer, I appreciate the performance and flexibility of Digital Nexify's servers. The one-click staging environments are a game-changer for my workflow."</p>
                     </div>
-                </div>
-            </div>
-        </section>
-
         <!-- FAQ Section -->
-        <section class="faq" id="faq">
-            <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
+        <section class="faq" id="faq">onial-card">
+            <div class="container">"testimonial-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>/women/68.jpg" alt="Emily Rodriguez" class="testimonial-avatar">
                 <p class="section-subtitle">Have questions? We've got answers. If you can't find what you're looking for, our support team is always happy to help.</p>
-                
-                <div class="faq-container">
+                                <h4>Emily Rodriguez</h4>
+                <div class="faq-container">/p>
                     <div class="faq-item">
                         <div class="faq-question">
                             <span>What is web hosting?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
+                        </div> class="fas fa-star"></i>
+                        <div class="faq-answer">r"></i>
                             <p>Web hosting is a service that allows organizations and individuals to post a website or web page onto the Internet. A web host, or web hosting service provider, is a business that provides the technologies and services needed for the website or webpage to be viewed on the Internet.</p>
-                        </div>
-                    </div>
-                    
+                        </div> class="fas fa-star-half-alt"></i>
+                    </div>div>
+                        <p>"My blog traffic has grown significantly since moving to Digital Nexify. The uptime is excellent and whenever I've needed help, their support team responds within minutes."</p>
                     <div class="faq-item">
                         <div class="faq-question">
                             <span>Do you offer a money-back guarantee?</span>
@@ -536,58 +536,58 @@
                         </div>
                         <div class="faq-answer">
                             <p>Yes! We offer a 30-day money-back guarantee on all our hosting plans. If you're not completely satisfied with our service, you can cancel within the first 30 days for a full refund, no questions asked.</p>
-                        </div>
-                    </div>
-                    
+                        </div>ner">
+                    </div>"section-title">Frequently Asked Questions</h2>
+                    lass="section-subtitle">Have questions? We've got answers. If you can't find what you're looking for, our support team is always happy to help.</p>
                     <div class="faq-item">
                         <div class="faq-question">
                             <span>Can I upgrade or downgrade my plan later?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
+                        </div>pan>What is web hosting?</span>
+                        <div class="faq-answer">vron-down"></i>
                             <p>Absolutely! You can upgrade or downgrade your hosting plan at any time through your control panel. The change will take effect immediately, and you'll only pay the prorated difference for the remainder of your billing cycle.</p>
+                        </div>lass="faq-answer">
+                    </div>  <p>Web hosting is a service that allows organizations and individuals to post a website or web page onto the Internet. A web host, or web hosting service provider, is a business that provides the technologies and services needed for the website or webpage to be viewed on the Internet.</p>
                         </div>
-                    </div>
-                    
                     <div class="faq-item">
                         <div class="faq-question">
                             <span>Do you provide website migration services?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
+                        </div>pan>Do you offer a money-back guarantee?</span>
+                        <div class="faq-answer">vron-down"></i>
                             <p>Yes, we offer free website migration services for all new customers. Our expert team will handle the entire migration process for you, ensuring zero downtime for your website during the transition.</p>
+                        </div>lass="faq-answer">
+                    </div>  <p>Yes! We offer a 30-day money-back guarantee on all our hosting plans. If you're not completely satisfied with our service, you can cancel within the first 30 days for a full refund, no questions asked.</p>
                         </div>
-                    </div>
-                    
                     <div class="faq-item">
                         <div class="faq-question">
                             <span>What kind of support do you offer?</span>
                             <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
+                        </div>pan>Can I upgrade or downgrade my plan later?</span>
+                        <div class="faq-answer">vron-down"></i>
                             <p>We provide 24/7/365 support via live chat, email, and phone. Our support team consists of experienced hosting professionals who can assist you with any technical issues, questions about your account, or help with website optimization.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta">
-            <div class="container cta-content">
+                        </div>lass="faq-answer">
+                    </div>  <p>Absolutely! You can upgrade or downgrade your hosting plan at any time through your control panel. The change will take effect immediately, and you'll only pay the prorated difference for the remainder of your billing cycle.</p>
+                </div>  </div>
+            </div>  </div>
+        </section>  
+                    <div class="faq-item">
+        <!-- CTA Section --> class="faq-question">
+        <section class="cta">span>Do you provide website migration services?</span>
+            <div class="container cta-content">evron-down"></i>
                 <h2>Ready to Launch Your Website?</h2>
                 <p>Join thousands of satisfied customers who trust Digital Nexify for their web hosting needs. Get started today and experience the difference.</p>
-                <div class="cta-btns">
+                <div class="cta-btns"> offer free website migration services for all new customers. Our expert team will handle the entire migration process for you, ensuring zero downtime for your website during the transition.</p>
                     <a href="#pricing" class="btn btn-primary">Choose Your Plan</a>
                     <a href="mailto:amboyeted@gmail.com" class="btn btn-outline">Contact Sales</a>
                 </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="footer-grid">
+            </div>  <div class="faq-item">
+        </section>      <div class="faq-question">
+                            <span>What kind of support do you offer?</span>
+        <!-- Footer -->     <i class="fas fa-chevron-down"></i>
+        <footer>        </div>
+            <div class="container">"faq-answer">
+                <div class="footer-grid"> 24/7/365 support via live chat, email, and phone. Our support team consists of experienced hosting professionals who can assist you with any technical issues, questions about your account, or help with website optimization.</p>
                     <div class="footer-col">
                         <h3>Digital Nexify</h3>
                         <p>Premium web hosting solutions with unmatched performance, security, and support.</p>
@@ -596,31 +596,53 @@
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    
+                        </div>ner cta-content">
+                    </div>to Launch Your Website?</h2>
+                    oin thousands of satisfied customers who trust Digital Nexify for their web hosting needs. Get started today and experience the difference.</p>
                     <div class="footer-col">
-                        <h3>Hosting</h3>
-                        <ul class="footer-links">
+                        <h3>Hosting</h3>lass="btn btn-primary">Choose Your Plan</a>
+                        <ul class="footer-links">il.com" class="btn btn-outline">Contact Sales</a>
                             <li><a href="#">Shared Hosting</a></li>
                             <li><a href="#">WordPress Hosting</a></li>
                             <li><a href="#">VPS Hosting</a></li>
                             <li><a href="#">Dedicated Servers</a></li>
                             <li><a href="#">Cloud Hosting</a></li>
                         </ul>
+                    </div>ntainer">
+                     class="footer-grid">
+                    <div class="footer-col">
+                        <h3>Company</h3>fy</h3>
+                        <ul class="footer-links">lutions with unmatched performance, security, and support.</p>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Careers</a></li>ebook-f"></i></a>
+                            <li><a href="#">Blog</a></li>twitter"></i></a>
+                            <li><a href="#">Press</a></li>nstagram"></i></a>
+                            <li><a href="mailto:amboyeted@gmail.com">Contact Us</a></li>
+                        </ul>>
                     </div>
                     
                     <div class="footer-col">
-                        <h3>Company</h3>
+                        <h3>Legal</h3>3>
                         <ul class="footer-links">
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="mailto:amboyeted@gmail.com">Contact Us</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>li>
+                            <li><a href="#">Acceptable Use Policy</a></li>
+                            <li><a href="#">Refund Policy</a></li>/li>
+                            <li><a href="#">SLA</a></li>g</a></li>
                         </ul>
                     </div>
-                    
+                </div>
+                    <div class="footer-col">
+                <div class="footer-bottom">
+                    <p>&copy; 2023 Digital Nexify. All rights reserved.</p>
+                </div>      <li><a href="#">About Us</a></li>
+            </div>          <li><a href="#">Careers</a></li>
+        </footer>           <li><a href="#">Blog</a></li>
+    </div>                  <li><a href="#">Press</a></li>
+                            <li><a href="mailto:amboyeted@gmail.com">Contact Us</a></li>
+    <script src="assets/js/scripts.js"></script>
+</body>             </div>
+</html>             
                     <div class="footer-col">
                         <h3>Legal</h3>
                         <ul class="footer-links">
