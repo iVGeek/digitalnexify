@@ -146,3 +146,8 @@ function logData($data = NULL, $logFile = 'event') {
 function pesapal_clientarea() {
     exit('test');
 }
+
+
+#add_logic_code_##
+$-init get all def int (repv , int:
+;;
